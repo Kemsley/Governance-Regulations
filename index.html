@@ -1,0 +1,656 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FPX - Enterprise AI & Governance Dashboard</title>
+    <style>
+        :root {
+            --bg-color: #0b0f19;
+            --card-bg: #111827;
+            --accent: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.3);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        h1 {
+            margin-bottom: 5px;
+            color: var(--accent);
+            text-align: center;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+        }
+
+        p.subtitle {
+            color: var(--text-muted);
+            margin-bottom: 25px;
+            text-align: center;
+            font-size: 0.95rem;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 950px;
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        .section-title {
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+        }
+
+        /* Avatar Selection Grid (Compact) */
+        .avatar-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+            gap: 10px;
+        }
+
+        .avatar-card {
+            background-color: var(--card-bg);
+            border: 2px solid #1f2937;
+            border-radius: 10px;
+            padding: 8px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .avatar-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(56, 189, 248, 0.5);
+        }
+
+        .avatar-card.selected {
+            border-color: var(--accent);
+            box-shadow: 0 0 12px var(--accent-glow);
+            background-color: #1e293b;
+        }
+
+        .avatar-img-container {
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 6px auto;
+            background: #000;
+            border: 2px solid var(--accent);
+        }
+
+        .avatar-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .avatar-name {
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: var(--text-main);
+        }
+
+        .avatar-role {
+            font-size: 0.65rem;
+            color: var(--text-muted);
+        }
+
+        /* Active Display Stage Screen */
+        .stage {
+            background-color: var(--card-bg);
+            border: 1px solid #1f2937;
+            border-radius: 16px;
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.4);
+        }
+
+        /* Smaller Dual-Image Partner Display Frame */
+        .stage-duo-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .stage-avatar-box, .stage-partner-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 2px solid var(--accent);
+            box-shadow: 0 0 10px var(--accent-glow);
+            background: #000;
+        }
+
+        .stage-avatar-box img, .stage-partner-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .partner-plus {
+            font-size: 1.3rem;
+            color: var(--accent);
+            font-weight: bold;
+        }
+
+        .speaking-left {
+            animation: pulse-glow-left 0.5s infinite alternate;
+        }
+        .speaking-right {
+            animation: pulse-glow-right 0.5s infinite alternate;
+        }
+
+        @keyframes pulse-glow-left {
+            0% { transform: scale(1); box-shadow: 0 0 8px var(--accent); }
+            100% { transform: scale(1.05); box-shadow: 0 0 18px var(--accent); }
+        }
+        @keyframes pulse-glow-right {
+            0% { transform: scale(1); box-shadow: 0 0 8px var(--accent); }
+            100% { transform: scale(1.05); box-shadow: 0 0 18px var(--accent); }
+        }
+
+        /* Clean FPX Telemetry Display Box */
+        .telemetry-box {
+            width: 100%;
+            background: #0b0f19;
+            border: 1px solid #334155;
+            border-radius: 10px;
+            padding: 12px 18px;
+            margin-bottom: 15px;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .telemetry-title {
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 4px;
+        }
+
+        .telemetry-text {
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+
+        /* Side-by-Side Dual Textboxes */
+        .dual-textbox-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        .speech-box {
+            background: #0b0f19;
+            border: 1px solid #334155;
+            padding: 15px;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            text-align: left;
+            box-sizing: border-box;
+        }
+
+        .speech-box label {
+            font-size: 0.75rem;
+            color: var(--accent);
+            font-weight: 700;
+        }
+
+        .speech-box textarea {
+            width: 100%;
+            padding: 10px;
+            background-color: #111827;
+            border: 1px solid #334155;
+            border-radius: 6px;
+            color: white;
+            font-size: 0.9rem;
+            resize: vertical;
+            min-height: 80px;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        .speech-box textarea:focus {
+            border-color: var(--accent);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+            width: 100%;
+        }
+
+        button.speak-btn {
+            flex: 1;
+            background-color: var(--accent);
+            color: #0b0f19;
+            border: none;
+            padding: 14px;
+            font-size: 0.95rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: opacity 0.2s, transform 0.1s;
+        }
+
+        button.speak-btn:hover {
+            opacity: 0.9;
+        }
+
+        button.speak-btn:active {
+            transform: scale(0.98);
+        }
+
+        .control-group {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+            text-align: left;
+            width: 100%;
+        }
+
+        label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 600;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px;
+            background-color: #0b0f19;
+            border: 1px solid #334155;
+            border-radius: 8px;
+            color: white;
+            font-size: 0.95rem;
+            box-sizing: border-box;
+            outline: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>AI: GOVERNANCE SYSTEMS MANAGEMENT</h1>
+        <p class="subtitle">FPX • 15 Governance Requirements (GRD) Evaluation Dashboard</p>
+
+        <!-- 1. Avatar Selector (Compact) -->
+        <div>
+            <div class="section-title">1. CHOOSE YOUR AI SPECIALIST</div>
+            <div class="avatar-grid" id="avatarGrid">
+                <div class="avatar-card selected" data-name="Hacker" data-gender="male" data-role="Cyber-Security" data-img="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&q=80">
+                    <div class="avatar-img-container"><img src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&q=80" alt="Hacker"></div>
+                    <div class="avatar-name">Hacker</div>
+                    <div class="avatar-role">Security</div>
+                </div>
+                <div class="avatar-card" data-name="Researcher" data-gender="female" data-role="Data-Analytics" data-img="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80">
+                    <div class="avatar-img-container"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80" alt="Researcher"></div>
+                    <div class="avatar-name">Researcher</div>
+                    <div class="avatar-role">Analytics</div>
+                </div>
+                <div class="avatar-card" data-name="Office" data-gender="male" data-role="Modern-Workflow" data-img="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80">
+                    <div class="avatar-img-container"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80" alt="Office"></div>
+                    <div class="avatar-name">Office</div>
+                    <div class="avatar-role">Workflow</div>
+                </div>
+                <div class="avatar-card" data-name="Doctor" data-gender="female" data-role="AI-Diagnostics" data-img="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80">
+                    <div class="avatar-img-container"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=400&q=80" alt="Doctor"></div>
+                    <div class="avatar-name">Doctor</div>
+                    <div class="avatar-role">Diagnostics</div>
+                </div>
+                <div class="avatar-card" data-name="Librarian" data-gender="female" data-role="Knowledge-Curation" data-img="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80">
+                    <div class="avatar-img-container"><img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80" alt="Librarian"></div>
+                    <div class="avatar-name">Librarian</div>
+                    <div class="avatar-role">Curation</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ENTERPRISE ROLES & 15 GRD VIOLATIONS -->
+        <div>
+            <div class="section-title">2. ENTERPRISE ROLE & 15 GRD EVALUATION SCENARIOS</div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+                <div class="control-group">
+                    <label for="mashupPartner">ENTERPRISE COLLABORATOR ROLE</label>
+                    <select id="mashupPartner">
+                        <option value="engineer">👨‍💻 Lead Software Engineer</option>
+                        <option value="governance">👩‍⚖️ Head of Governance</option>
+                        <option value="ceo">👔 Chief Executive Officer</option>
+                        <option value="architect">📐 Enterprise Data Architect</option>
+                        <option value="operations">📊 Operations Director</option>
+                    </select>
+                </div>
+                <div class="control-group">
+                    <label for="mashupScenario">15 GRD VIOLATION EVALUATION</label>
+                    <select id="mashupScenario">
+                        <option value="v1">Violation 1: Conditions of Use (Mandate & Boundaries)</option>
+                        <option value="v2">Violation 2: Authority and Autonomy Limits (Hard Gates)</option>
+                        <option value="v3">Violation 3: Jurisdictional Compliance (Geographic/Legal)</option>
+                        <option value="v4">Violation 4: Data Perimeter Control (Authorised Datasets)</option>
+                        <option value="v5">Violation 5: Mission Alignment Monitoring (Function Creep)</option>
+                        <option value="v6">Violation 6: Normative Guardrails (Bias & Ethical Drift)</option>
+                        <option value="v7">Violation 7: Intervention and Escalation Pathways</option>
+                        <option value="v8">Violation 8: Supervisory Override Capability</option>
+                        <option value="v9">Violation 9: Human-Mediated Execution Gates</option>
+                        <option value="v10">Violation 10: Continuous Boundary Monitoring</option>
+                        <option value="v11">Violation 11: Change and Drift Detection</option>
+                        <option value="v12">Violation 12: Adversarial Pattern Recognition</option>
+                        <option value="v13">Violation 13: Forensic Audit Logging</option>
+                        <option value="v14">Violation 14: Clarification Data Generation</option>
+                        <option value="v15">Violation 15: Fail-Safe Integrity & Heartbeat Loss</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. ACTIVE STAGE SCREEN -->
+        <div class="stage">
+            <!-- Smaller Dual Image Framework -->
+            <div class="stage-duo-container" id="stageDuoContainer">
+                <div class="stage-avatar-box" id="stageAvatarBox">
+                    <img id="stageImg" src="https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&q=80" alt="Specialist">
+                </div>
+                <div class="partner-plus">+</div>
+                <div class="stage-partner-box" id="stagePartnerBox">
+                    <img id="partnerImg" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&q=80" alt="Partner Role">
+                </div>
+            </div>
+
+            <!-- Clean FPX Telemetry Display Box -->
+            <div class="telemetry-box">
+                <div class="telemetry-title" id="telemetryTitle">Active Telemetry: GRD Evaluation</div>
+                <div class="telemetry-text" id="telemetryText">Evaluating runtime conditions against GRD parameters.</div>
+            </div>
+
+            <!-- Dual Side-by-Side Textboxes for Dialogue -->
+            <div class="dual-textbox-container">
+                <div class="speech-box">
+                    <label id="leftBoxLabel">SPECIALIST INPUT (AI)</label>
+                    <textarea id="leftInputText"></textarea>
+                </div>
+                <div class="speech-box">
+                    <label id="rightBoxLabel">COLLABORATOR INPUT (ENTERPRISE)</label>
+                    <textarea id="rightInputText"></textarea>
+                </div>
+            </div>
+
+            <!-- Action Buttons for Authentic Voice Playback -->
+            <div class="action-buttons">
+                <button class="speak-btn" id="speakLeftBtn">Speak AI Specialist 🗣️</button>
+                <button class="speak-btn" id="speakRightBtn" style="background-color: #0ea5e9; color: white;">Speak Collaborator 🗣️</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let selectedAvatar = { 
+            name: 'Hacker', 
+            gender: 'male',
+            img: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=400&q=80'
+        };
+
+        const partnerData = {
+            engineer: {
+                name: "Lead Software Engineer",
+                gender: "male",
+                img: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&q=80",
+                dialogue: "Regulation evaluated: Boundary parameters breached. Execution flagged and routed into a holding path."
+            },
+            governance: {
+                name: "Head of Governance",
+                gender: "female",
+                img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=400&q=80",
+                dialogue: "Regulation evaluated: Not valid. Parameters fail boundary conditions and require containment."
+            },
+            ceo: {
+                name: "Chief Executive Officer",
+                gender: "male",
+                img: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&q=80",
+                dialogue: "Execution halted. Placed in a holding path pending verification and liability review."
+            },
+            architect: {
+                name: "Enterprise Data Architect",
+                gender: "male",
+                img: "https://images.unsplash.com/photo-1492562080023-ab3db95bfbce?w=400&q=80",
+                dialogue: "Regulation evaluated: Schema compliance failure. Diverted to holding path for verification."
+            },
+            operations: {
+                name: "Operations Director",
+                gender: "female",
+                img: "https://images.unsplash.com/photo-1580489944761-15a19d654956?w=400&q=80",
+                dialogue: "System held in containment path. Awaiting validation token to clear execution queues."
+            }
+        };
+
+        const scenarioData = {
+            v1: { 
+                title: "Violation 1: Conditions of Use", 
+                aidialogue: "Operational mandate check: Task execution exceeds approved mission boundaries[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v2: { 
+                title: "Violation 2: Authority and Autonomy Limits", 
+                aidialogue: "Hard gate check: Unauthorised autonomy scope expansion detected[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v3: { 
+                title: "Violation 3: Jurisdictional Compliance", 
+                aidialogue: "Boundary constraint check: Geographic or legal parameters violated[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v4: { 
+                title: "Violation 4: Data Perimeter Control", 
+                aidialogue: "Perimeter check: Processing attempted outside authorised datasets[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v5: { 
+                title: "Violation 5: Mission Alignment Monitoring", 
+                aidialogue: "Function creep detected: Unauthorised task execution pattern identified[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v6: { 
+                title: "Violation 6: Normative Guardrails", 
+                aidialogue: "Guardrail check: Bias, fairness violations, or ethical drift detected[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v7: { 
+                title: "Violation 7: Intervention and Escalation", 
+                aidialogue: "Escalation check: Predefined pathway thresholds breached[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v8: { 
+                title: "Violation 8: Supervisory Override Capability", 
+                aidialogue: "Override check: Manual restriction or reset protocol required[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v9: { 
+                title: "Violation 9: Human-Mediated Execution Gates", 
+                aidialogue: "Transactional gate check: Explicit electronic validation missing before commitment[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v10: { 
+                title: "Violation 10: Continuous Boundary Monitoring", 
+                aidialogue: "Telemetry check: Operational envelope tracking indicates deviation[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v11: { 
+                title: "Violation 11: Change and Drift Detection", 
+                aidialogue: "Drift check: Significant shifts in data, behaviour, or configuration identified[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v12: { 
+                title: "Violation 12: Adversarial Pattern Recognition", 
+                aidialogue: "Adversarial check: Prompt manipulation, jailbreaking, or probing detected[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v13: { 
+                title: "Violation 13: Forensic Audit Logging", 
+                aidialogue: "Audit check: Tamper-proof state transition recording interrupted[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v14: { 
+                title: "Violation 14: Clarification Data Generation", 
+                aidialogue: "Clarification check: Logic attribution data missing for intervention[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            },
+            v15: { 
+                title: "Violation 15: Fail-Safe Integrity", 
+                aidialogue: "Heartbeat check: Telemetry loss detected; system suspension required[cite: 80].",
+                principle: "Regulation evaluated: Not valid. Placed in a holding path."
+            }
+        };
+
+        let systemVoices = [];
+        function loadVoices() {
+            systemVoices = window.speechSynthesis.getVoices();
+        }
+        if ('speechSynthesis' in window) {
+            loadVoices();
+            window.speechSynthesis.onvoiceschanged = loadVoices;
+        }
+
+        const cards = document.querySelectorAll('.avatar-card');
+        const stageImg = document.getElementById('stageImg');
+        const partnerImg = document.getElementById('partnerImg');
+        const leftInputText = document.getElementById('leftInputText');
+        const rightInputText = document.getElementById('rightInputText');
+        const leftBoxLabel = document.getElementById('leftBoxLabel');
+        const rightBoxLabel = document.getElementById('rightBoxLabel');
+        const mashupPartner = document.getElementById('mashupPartner');
+        const mashupScenario = document.getElementById('mashupScenario');
+        const telemetryTitle = document.getElementById('telemetryTitle');
+        const telemetryText = document.getElementById('telemetryText');
+
+        function updateContent() {
+            const partnerKey = mashupPartner.value;
+            const scenarioKey = mashupScenario.value;
+            
+            const currentPartner = partnerData[partnerKey];
+            const currentScenario = scenarioData[scenarioKey];
+
+            partnerImg.src = currentPartner.img;
+            telemetryTitle.textContent = currentScenario.title;
+            telemetryText.textContent = currentScenario.principle;
+
+            leftBoxLabel.textContent = `${selectedAvatar.name.toUpperCase()} (AI SPECIALIST)`;
+            rightBoxLabel.textContent = `${currentPartner.name.toUpperCase()} (COLLABORATOR)`;
+
+            leftInputText.value = currentScenario.aidialogue;
+            rightInputText.value = currentPartner.dialogue;
+        }
+
+        cards.forEach(card => {
+            card.addEventListener('click', () => {
+                cards.forEach(c => c.classList.remove('selected'));
+                card.classList.add('selected');
+                
+                selectedAvatar.name = card.getAttribute('data-name');
+                selectedAvatar.gender = card.getAttribute('data-gender');
+                selectedAvatar.img = card.getAttribute('data-img');
+
+                stageImg.src = selectedAvatar.img;
+                updateContent();
+            });
+        });
+
+        mashupPartner.addEventListener('change', updateContent);
+        mashupScenario.addEventListener('change', updateContent);
+
+        updateContent();
+
+        function speakText(text, gender, boxType) {
+            if (!text) return;
+
+            if (!('speechSynthesis' in window)) {
+                alert('Your browser does not support text-to-speech.');
+                return;
+            }
+
+            window.speechSynthesis.cancel();
+
+            const utterance = new SpeechSynthesisUtterance(text);
+            
+            if (systemVoices.length > 0) {
+                let matchedVoice = systemVoices.find(v => {
+                    const name = v.name.toLowerCase();
+                    if (gender === 'female') {
+                        return name.includes('female') || name.includes('zira') || name.includes('sara') || name.includes('victoria') || name.includes('karen') || name.includes('natural') || name.includes('online');
+                    } else {
+                        return name.includes('male') || name.includes('david') || name.includes('george') || name.includes('mark') || name.includes('daniel') || name.includes('natural') || name.includes('online');
+                    }
+                });
+                
+                if (!matchedVoice) {
+                    matchedVoice = systemVoices[0];
+                }
+                utterance.voice = matchedVoice;
+            }
+
+            utterance.pitch = gender === 'female' ? 1.0 : 0.95;
+            utterance.rate = 0.98;
+
+            const avatarBox = document.getElementById('stageAvatarBox');
+            const partnerBox = document.getElementById('stagePartnerBox');
+
+            if (boxType === 'left') {
+                avatarBox.classList.add('speaking-left');
+            } else {
+                partnerBox.classList.add('speaking-right');
+            }
+
+            utterance.onend = () => {
+                avatarBox.classList.remove('speaking-left');
+                partnerBox.classList.remove('speaking-right');
+            };
+
+            utterance.onerror = () => {
+                avatarBox.classList.remove('speaking-left');
+                partnerBox.classList.remove('speaking-right');
+            };
+
+            window.speechSynthesis.speak(utterance);
+        }
+
+        document.getElementById('speakLeftBtn').addEventListener('click', () => {
+            speakText(leftInputText.value, selectedAvatar.gender, 'left');
+        });
+
+        document.getElementById('speakRightBtn').addEventListener('click', () => {
+            const partnerKey = mashupPartner.value;
+            const gender = partnerData[partnerKey].gender;
+            speakText(rightInputText.value, gender, 'right');
+        });
+    </script>
+</body>
+</html>
