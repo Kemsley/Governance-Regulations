@@ -1,1 +1,1126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CORESTATE | Governance Systems Management</title>
 
+  <style>
+    :root {
+      --background: #1f4f3f;
+      --heading: #194334;
+      --paper: #f5f1e7;
+      --cream: #eeeade;
+      --green: #315c49;
+      --ink: #263d30;
+      --line: #c6cebc;
+      --muted: #607060;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      background: var(--background);
+      color: var(--ink);
+      font: 14px/1.45 Arial, Helvetica, sans-serif;
+    }
+
+    main {
+      max-width: 1400px;
+      margin: auto;
+      padding: 16px 28px;
+    }
+
+    .page-header {
+      max-width: 1180px;
+      margin: 0 auto 30px;
+      padding: 12px 0 4px;
+      text-align: center;
+    }
+
+    .official-brand {
+      display: block;
+      width: 245px;
+      max-width: 65%;
+      height: 91px;
+      object-fit: contain;
+      margin: auto;
+      filter: drop-shadow(0 1px 2px #10291f);
+    }
+
+    h1 {
+      margin: 9px 0 20px;
+      color: var(--paper);
+      font-size: 32px;
+      line-height: 1.3;
+      font-weight: 400;
+    }
+
+    .description {
+      margin: 0;
+      color: #e2ebe5;
+      font-size: 11px;
+      line-height: 1.65;
+    }
+
+    .demo-label {
+      margin-top: 23px;
+      color: #c6d8ce;
+      font-size: 11px;
+      letter-spacing: 1.2px;
+    }
+
+    .controls,
+    .columns {
+      max-width: 1180px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, .85fr);
+      gap: 16px;
+    }
+
+    .controls {
+      margin-bottom: 14px;
+      align-items: end;
+    }
+
+    .control {
+      min-width: 0;
+    }
+
+    .control label,
+    .control-label {
+      display: block;
+      margin-bottom: 7px;
+      color: var(--paper);
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    select {
+      width: 100%;
+      height: 42px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--paper);
+      color: var(--ink);
+      font: 600 13px Arial, Helvetica, sans-serif;
+    }
+
+    select:focus-visible,
+    summary:focus-visible,
+    a:focus-visible {
+      outline: 3px solid #a5b69b;
+      outline-offset: 3px;
+    }
+
+    .risk-indicator {
+      display: flex;
+      align-items: center;
+      gap: 13px;
+      height: 42px;
+      padding: 8px 12px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--paper);
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .traffic-dots {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .risk-dot {
+      display: block;
+      width: 12px;
+      height: 12px;
+      border: 1px solid #adb3a6;
+      border-radius: 50%;
+      background: #d2d4cb;
+    }
+
+    .risk-indicator[data-level="green"] .green {
+      background: #258348;
+      border-color: #176035;
+      box-shadow: 0 0 0 3px #25834825;
+    }
+
+    .risk-indicator[data-level="amber"] .amber {
+      background: #d49113;
+      border-color: #9c680a;
+      box-shadow: 0 0 0 3px #d4911325;
+    }
+
+    .risk-indicator[data-level="red"] .red {
+      background: #c73e35;
+      border-color: #983027;
+      box-shadow: 0 0 0 3px #c73e3525;
+    }
+
+    .panel {
+      min-width: 0;
+      padding: 16px 19px;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+    }
+
+    .panel > h2 {
+      display: flex;
+      align-items: center;
+      min-height: 56px;
+      margin: -16px -19px 16px;
+      padding: 14px 19px;
+      border-radius: 9px 9px 0 0;
+      background: var(--heading);
+      color: #fff;
+      font-size: 20px;
+      line-height: 1.3;
+    }
+
+    h3 {
+      margin: 14px 0 5px;
+      font-size: 13px;
+    }
+
+    p {
+      margin: 7px 0 12px;
+    }
+
+    .panel p,
+    .panel li {
+      font-size: 13px;
+    }
+
+    ul {
+      margin: 6px 0 12px;
+      padding-left: 17px;
+    }
+
+    li {
+      margin: 7px 0;
+    }
+
+    .situation,
+    .responsibility-block {
+      margin-bottom: 12px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .situation h3 {
+      margin-top: 0;
+      font-size: 12px;
+    }
+
+    .situation p {
+      margin-bottom: 0;
+    }
+
+    .department-context {
+      margin-bottom: 12px;
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    summary {
+      cursor: pointer;
+      color: var(--green);
+      font-weight: 700;
+    }
+
+    .responsibility-block details,
+    .article-detail {
+      font-size: 12px;
+    }
+
+    .article-detail {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    a {
+      color: var(--green);
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 11px !important;
+    }
+
+    .scenario-grd {
+      margin: 14px 0;
+      padding: 11px 12px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: #e5e9da;
+    }
+
+    .scenario-grd summary {
+      font-size: 13px;
+    }
+
+    .scenario-grd strong,
+    .scenario-grd span {
+      display: block;
+      font-size: 12px;
+    }
+
+    .scenario-grd strong {
+      margin-bottom: 3px;
+    }
+
+    .scenario-grd .small {
+      margin-bottom: 0;
+      font-size: 10px !important;
+    }
+
+    .audit-scope {
+      color: var(--muted);
+      font-size: 11px !important;
+    }
+
+    #auditTrail {
+      max-height: 330px;
+      overflow-y: auto;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    #auditTrail li {
+      margin: 0 0 1px;
+      padding: 0 0 14px 11px;
+      border-left: 2px solid #a5b69b;
+    }
+
+    #auditTrail time {
+      display: block;
+      color: var(--muted);
+      font-size: 10px;
+    }
+
+    #auditTrail strong,
+    #auditTrail span {
+      display: block;
+      font-size: 12px;
+    }
+
+    #auditTrail strong {
+      margin: 2px 0;
+    }
+
+    .audit-note {
+      padding-top: 10px;
+      border-top: 1px solid var(--line);
+    }
+
+    .frameworks {
+      max-width: 1180px;
+      margin: 18px auto 0;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      background: var(--paper);
+    }
+
+    .frameworks > summary {
+      padding: 14px 19px;
+      background: var(--heading);
+      color: #fff;
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    .framework-content {
+      padding: 16px 19px;
+    }
+
+    .framework-content p {
+      font-size: 13px;
+    }
+
+    .framework-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .framework-card {
+      padding: 12px;
+      border: 1px solid var(--line);
+      border-radius: 7px;
+      background: var(--cream);
+    }
+
+    .framework-card h3 {
+      margin: 0 0 5px;
+      font-size: 14px;
+    }
+
+    .framework-card p {
+      margin: 0;
+      font-size: 12px;
+    }
+
+    .framework-card a {
+      font-weight: 600;
+    }
+
+    .framework-themes {
+      margin-top: 14px;
+      padding-top: 12px;
+      border-top: 1px solid var(--line);
+    }
+
+    footer {
+      margin: 16px auto 0;
+      color: #d0d6c9;
+      text-align: center;
+      font-size: 11px;
+    }
+
+    @media (max-width: 1000px) {
+      .controls,
+      .columns {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .risk-control,
+      .audit-panel {
+        grid-column: 1 / -1;
+      }
+    }
+
+    @media (max-width: 650px) {
+      main {
+        padding: 14px;
+      }
+
+      h1 {
+        font-size: 26px;
+      }
+
+      .official-brand {
+        width: 212px;
+        height: 79px;
+      }
+
+      .controls,
+      .columns,
+      .framework-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .risk-control,
+      .audit-panel {
+        grid-column: auto;
+      }
+
+      select {
+        font-size: 16px;
+      }
+
+      .description {
+        max-width: 360px;
+        margin: auto;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main>
+    <header class="page-header">
+      <img
+        class="official-brand"
+        src="corestate-logo.svg"
+        alt="CORESTATE — Independent Systems Control"
+      >
+
+      <h1>Governance Systems Management</h1>
+
+      <p class="description">
+        Connects governance requirements to departmental responsibilities,<br>
+        practical actions and supporting evidence.
+      </p>
+
+      <div class="demo-label">
+        DEMO ONLY · ILLUSTRATIVE SCENARIOS
+      </div>
+    </header>
+
+    <section class="controls" aria-label="Scenario controls">
+      <div class="control">
+        <label for="departmentSelect">Choose a department</label>
+
+        <select id="departmentSelect">
+          <option value="Human Resources">Human Resources</option>
+          <option value="Procurement">Procurement</option>
+          <option value="Engineering">Engineering</option>
+        </select>
+      </div>
+
+      <div class="control">
+        <label for="scenarioSelect">Choose a scenario</label>
+        <select id="scenarioSelect"></select>
+      </div>
+
+      <div class="control risk-control">
+        <span class="control-label" id="riskIndicatorLabel">
+          Risk indicator
+        </span>
+
+        <div
+          class="risk-indicator"
+          id="riskIndicator"
+          role="status"
+          aria-live="polite"
+          aria-labelledby="riskIndicatorLabel"
+          data-level="amber"
+        >
+          <span class="traffic-dots" aria-hidden="true">
+            <i class="risk-dot green"></i>
+            <i class="risk-dot amber"></i>
+            <i class="risk-dot red"></i>
+          </span>
+
+          <span id="riskTier">Amber issue</span>
+        </div>
+      </div>
+    </section>
+
+    <div class="columns">
+      <section class="panel">
+        <h2>Prevention</h2>
+
+        <div class="situation">
+          <h3>The situation</h3>
+          <p id="shortQuestion"></p>
+        </div>
+
+        <div id="departmentContext" class="department-context"></div>
+
+        <div class="responsibility-block">
+          <h3>Department actions</h3>
+          <ul id="departmentResponsibility"></ul>
+
+          <details>
+            <summary>Shared responsibility</summary>
+            <p id="sharedResponsibility"></p>
+          </details>
+        </div>
+
+        <details class="scenario-grd">
+          <summary>Applicable GRD references</summary>
+          <ul id="scenarioGrdList"></ul>
+
+          <p class="small">
+            Relevant governance requirements for this example;
+            applicability does not mean the requirement has been satisfied.
+          </p>
+        </details>
+
+        <ul id="preventionList"></ul>
+      </section>
+
+      <section class="panel">
+        <h2>Company risk</h2>
+
+        <p id="companyRiskText"></p>
+
+        <h3>Known issue</h3>
+        <p id="companyRiskIssue"></p>
+
+        <details class="article-detail" id="articleDetail">
+          <summary id="articleLabel"></summary>
+          <p id="articleWhy"></p>
+
+          <a
+            id="articleLink"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Read the EU provision →
+          </a>
+        </details>
+      </section>
+
+      <section class="panel audit-panel">
+        <h2>Audit trail</h2>
+
+        <p class="audit-scope">
+          Selections recorded during this demo session.
+        </p>
+
+        <ol id="auditTrail" aria-live="polite"></ol>
+
+        <p class="small audit-note">
+          Selection history only. Evidence has not been verified and
+          sign-off has not been granted. Resets when the page reloads.
+        </p>
+      </section>
+    </div>
+
+    <details class="frameworks">
+      <summary>
+        Framework relevance to this scenario · ISO, NIST, OECD &amp; UK
+      </summary>
+
+      <div class="framework-content">
+        <p><strong id="frameworkScenarioTitle"></strong></p>
+
+        <div class="framework-grid" id="scenarioFrameworkGrid"></div>
+
+        <div class="framework-themes">
+          <p>
+            <strong>Relevant GRD themes</strong><br>
+            <span id="scenarioFrameworkThemes"></span>
+          </p>
+
+          <p class="small">
+            Illustrative scenario interpretation of the frameworks,
+            not a clause-by-clause mapping or a finding of compliance.
+            The applicable GRD references are shown in Prevention.
+            Evidence has not been verified.
+          </p>
+        </div>
+      </div>
+    </details>
+
+    <footer>
+      © CORESTATE Ltd · Illustrative scenario guidance.
+      Example responsibility assignments; confirm against your organisation.
+      EU applicability depends on the system, role and provision.
+    </footer>
+  </main>
+
+  <script>
+    "use strict";
+
+    const scenarios = {
+      literacy: {
+        title: "Staff using AI without preparation",
+        scenario:
+          "A company introduces AI tools without workshops, practical guidance or checks that staff can recognise unreliable outputs.",
+        prevention: [
+          "Prepare staff for the AI tasks they actually perform: checking outputs, handling sensitive information and recognising limitations.",
+          "Use practical exercises and role-specific guidance; check capability rather than attendance alone.",
+          "Give staff a clear route to ask for help or escalate uncertain results."
+        ],
+        risk:
+          "Staff may rely on false outputs, expose information or give customers incorrect advice.",
+        issue:
+          "Tools are available, but staff have not been prepared to use them responsibly.",
+        article: "Article 4 · AI literacy",
+        why:
+          "Addresses AI literacy for providers and deployers. Preparation should reflect people’s roles, experience and the context of use; a workshop alone is not the objective.",
+        number: "4",
+        responsibility: [
+          "Issue role-specific AI training schedules.",
+          "Keep attendance and completion records.",
+          "Follow up outstanding training with line managers."
+        ],
+        shared:
+          "Managers confirm readiness for their teams; Governance reviews the supporting evidence.",
+        tier: "Medium"
+      },
+
+      recruitment: {
+        title: "Recruitment AI treated as ordinary software",
+        scenario:
+          "HR switches on AI applicant ranking as a routine software feature, without assessing how it influences shortlisting or who could be disadvantaged.",
+        prevention: [
+          "Identify whether the tool filters, ranks or materially influences candidate selection.",
+          "Assess classification under Article 6 and Annex III; examine the supplier’s documentation and suitability evidence.",
+          "Assign trained reviewers with the authority and information needed to question recommendations."
+        ],
+        risk:
+          "Suitable applicants could be excluded unfairly, exposing the company to complaints and recruitment disputes.",
+        issue:
+          "The actual recruitment use has not been assessed.",
+        article: "Article 6 & Annex III · Classification",
+        why:
+          "Recruitment and selection uses can fall within high-risk classification. Assess the specific function and any applicable exceptions; a human final decision does not by itself settle classification.",
+        number: "6",
+        responsibility: [
+          "Document where AI is used in recruitment.",
+          "Assign staff to review shortlists.",
+          "Keep recruitment decisions and review records."
+        ],
+        shared:
+          "Procurement obtains supplier evidence; Governance coordinates classification and compliance review.",
+        tier: "High"
+      },
+
+      policy: {
+        title: "Approval policy written but not implemented",
+        scenario:
+          "Company policy requires human approval before an AI takes action. In practice, the workflow allows it to proceed without that approval.",
+        prevention: [
+          "Build the required approval into the workflow before the relevant action can proceed.",
+          "Name the approver and record what they authorised.",
+          "Test missing, refused and expired approvals to confirm that the workflow follows the policy."
+        ],
+        risk:
+          "Unauthorised actions could affect customers, records or finances while the company wrongly assumes approval is enforced.",
+        issue:
+          "The written policy and the operating workflow do not match.",
+        article: "Articles 14 & 26 · Human oversight",
+        why:
+          "For applicable high-risk AI, these provisions address oversight design and deployer responsibilities. A particular approval gate is a practical control, not a universal requirement for every AI action.",
+        number: "14",
+        responsibility: [
+          "Implement the agreed approval step.",
+          "Test that actions stop without approval.",
+          "Record test results and unresolved faults."
+        ],
+        shared:
+          "The business owner defines the approval requirement; Governance reviews the control evidence.",
+        tier: "High"
+      },
+
+      chatbot: {
+        title: "Customer-service AI bought without disclosure checks",
+        scenario:
+          "Procurement buys a customer-service chatbot without checking whether the supplied interface clearly tells customers they are interacting with AI.",
+        prevention: [
+          "Include customer-facing AI disclosure in the purchasing requirements.",
+          "Ask the supplier to demonstrate the live notice and document who maintains it.",
+          "Verify the configured service before acceptance and launch."
+        ],
+        risk:
+          "Customers may be misled about the service, leading to complaints, lost trust and potential transparency non-compliance.",
+        issue:
+          "Supplier acceptance checks did not cover customer-facing disclosure.",
+        article: "Article 50 · Transparency",
+        why:
+          "Covers transparency for certain AI interactions, including provider duties to inform people when they interact directly with AI, subject to exceptions such as where this is obvious.",
+        number: "50",
+        responsibility: [
+          "Include AI disclosure in supplier requirements.",
+          "Obtain the supplier’s demonstration and documentation.",
+          "Record acceptance checks and outstanding issues."
+        ],
+        shared:
+          "The service owner checks the live customer experience; Engineering configures the notice.",
+        tier: "Medium"
+      },
+
+      repurpose: {
+        title: "AI repurposed without reassessment",
+        scenario:
+          "A general assistant is adapted to recommend employee dismissals, but the company keeps the original assessment and does not review its new use.",
+        prevention: [
+          "Document the new intended use and who will be affected.",
+          "Reassess classification, impacts and responsibilities before deployment.",
+          "Check whether the change triggers provider obligations and what evidence and controls the new use needs."
+        ],
+        risk:
+          "Employment decisions could rely on an unsuitable system, creating harm to workers and legal exposure.",
+        issue:
+          "The assessment covers the old task rather than the new employment use.",
+        article: "Articles 6 & 25 · Changed use and responsibilities",
+        why:
+          "A changed purpose can affect classification and, in the circumstances specified in Article 25, cause an organisation to assume provider responsibilities.",
+        number: "25",
+        responsibility: [
+          "Record the proposed change of use.",
+          "Refer it for governance review before release.",
+          "Keep change approvals and test results."
+        ],
+        shared:
+          "HR owns the employment use; Governance coordinates reassessment of classification and responsibilities.",
+        tier: "High"
+      },
+
+      emotion: {
+        title: "Staff emotion-monitoring AI purchased without screening",
+        scenario:
+          "Procurement selects an AI product that infers employees’ emotions from facial or voice data for performance monitoring, without screening the proposed use against prohibited practices.",
+        prevention: [
+          "Screen the proposed use against prohibited practices before buying or deploying it.",
+          "Do not deploy a prohibited workplace emotion-inference use.",
+          "Use appropriate performance evidence; assess any claimed medical or safety exception separately."
+        ],
+        risk:
+          "Employees could be judged unfairly on inferred emotions rather than their work. The company could also operate a prohibited AI practice.",
+        issue:
+          "The proposed workplace use was not screened before purchasing.",
+        article: "Article 5(1)(f) · Workplace emotion inference",
+        why:
+          "Prohibits AI used to infer emotions in workplaces and education institutions, except for systems intended for medical or safety reasons.",
+        number: "5",
+        responsibility: [
+          "Record the product’s intended workplace use.",
+          "Refer emotion-monitoring features to Governance and Legal.",
+          "Hold the purchase pending their decision."
+        ],
+        shared:
+          "HR defines the intended workplace use; Governance and Legal assess permissibility.",
+        tier: "Severe"
+      }
+    };
+
+    const departments = {
+      "Human Resources": ["literacy", "recruitment"],
+      Procurement: ["chatbot", "emotion"],
+      Engineering: ["policy", "repurpose"]
+    };
+
+    const scenarioGrdReferences = {
+      literacy: [
+        [
+          1,
+          "Conditions of Use",
+          "Document the AI tasks staff may perform and the preparation needed for that use."
+        ],
+        [
+          2,
+          "Authority and Autonomy Limits",
+          "Clarify staff responsibilities and when a decision must be referred to an authorised reviewer."
+        ]
+      ],
+
+      recruitment: [
+        [
+          1,
+          "Conditions of Use",
+          "Define exactly how applicant ranking influences recruitment decisions."
+        ],
+        [
+          6,
+          "Normative Guardrails",
+          "Review fairness and potential discrimination affecting applicants."
+        ]
+      ],
+
+      policy: [
+        [
+          2,
+          "Authority and Autonomy Limits",
+          "Compare the authority granted in policy with the authority available in the actual workflow."
+        ],
+        [
+          13,
+          "Forensic Audit Logging",
+          "Retain records of approvals and relevant actions so the approval process can be reviewed."
+        ]
+      ],
+
+      chatbot: [
+        [
+          1,
+          "Conditions of Use",
+          "Define the customer-facing use and include the applicable disclosure requirements in acceptance criteria. Article 50 provides the specific disclosure reference; this GRD reference supports documenting the conditions of use."
+        ]
+      ],
+
+      repurpose: [
+        [
+          1,
+          "Conditions of Use",
+          "Review the revised purpose before using the assistant for employment decisions."
+        ],
+        [
+          5,
+          "Mission Alignment Monitoring",
+          "Compare the new task with the previously approved purpose."
+        ],
+        [
+          11,
+          "Change and Drift Detection",
+          "Record and review the change in use and its effect on the assessment."
+        ]
+      ],
+
+      emotion: [
+        [
+          3,
+          "Jurisdictional Compliance",
+          "Review the proposed workplace use against applicable legal restrictions."
+        ],
+        [
+          4,
+          "Data Perimeter Control",
+          "Identify the facial or voice data proposed for processing and its authorised use."
+        ],
+        [
+          6,
+          "Normative Guardrails",
+          "Review unfair or discriminatory effects of judging staff through inferred emotions."
+        ]
+      ]
+    };
+
+    const scenarioFrameworkRelevance = {
+      literacy: [
+        "Staff using AI without preparation",
+        "Competence and awareness: define the preparation needed for staff roles and keep evidence of readiness.",
+        "GOVERN: clarify responsibilities and provide training for the AI tasks people perform.",
+        "Accountability and human agency: equip staff to question unreliable outputs and seek help.",
+        "Accountability and governance: name the owner of staff preparation and the route for concerns.",
+        "Human agency and oversight · Accountability · Responsible use"
+      ],
+
+      recruitment: [
+        "Recruitment AI treated as ordinary software",
+        "AI impact and risk assessment: review effects on applicants and document recruitment responsibilities.",
+        "MAP and MEASURE: identify affected applicants and evaluate potential harmful bias in ranking.",
+        "Human rights and fairness: examine discriminatory exclusion and how applicants can understand decisions.",
+        "Fairness and contestability: provide meaningful review and routes to challenge recruitment outcomes.",
+        "Fairness and non-discrimination · Human oversight · Accountability"
+      ],
+
+      policy: [
+        "Approval policy written but not implemented",
+        "Operational governance: compare the documented approval requirement with the working process and retain review evidence.",
+        "GOVERN and MANAGE: assign approval authority and address gaps between policy and practice.",
+        "Accountability: identify who authorised an action and retain an understandable record.",
+        "Accountability and governance: ensure responsibility for approval is clear in the actual workflow.",
+        "Authority and autonomy limits · Accountability · Audit evidence"
+      ],
+
+      chatbot: [
+        "Customer-service AI bought without disclosure checks",
+        "Third-party and customer communication review: include disclosure expectations in supplier acceptance checks.",
+        "GOVERN and MAP: define supplier responsibilities and understand the customer interaction before launch.",
+        "Transparency and explainability: help customers recognise when they are interacting with AI.",
+        "Appropriate transparency: review the live customer notice and assign responsibility for maintaining it.",
+        "Conditions of use · Transparency · Supplier accountability"
+      ],
+
+      repurpose: [
+        "AI repurposed without reassessment",
+        "Change and impact review: reassess the management arrangements and risks for the proposed employment use.",
+        "MAP and MANAGE: revisit the changed context, affected workers and risk response before release.",
+        "Accountability and human rights: reassess consequences when an assistant is repurposed for dismissal recommendations.",
+        "Fairness and accountability: review employment impacts and establish responsibility for the changed use.",
+        "Conditions of use · Mission alignment · Change and drift detection"
+      ],
+
+      emotion: [
+        "Staff emotion-monitoring AI purchased without screening",
+        "Impact and risk review: assess the proposed workplace purpose, employee impacts and applicable restrictions before purchasing.",
+        "MAP and GOVERN: identify workplace context, sensitive data and relevant legal requirements before procurement proceeds.",
+        "Human rights, fairness and privacy: examine the effects of inferring emotions from employees’ facial or voice data.",
+        "Fairness and accountability: review employee impacts and refer permissibility to the responsible legal and governance owners.",
+        "Jurisdictional compliance · Data stewardship · Fairness"
+      ]
+    };
+
+    const frameworkReferenceLinks = [
+      [
+        "ISO/IEC 42001",
+        "https://www.iso.org/standard/42001"
+      ],
+      [
+        "NIST AI RMF 1.0",
+        "https://airc.nist.gov/airmf-resources/airmf/"
+      ],
+      [
+        "OECD principles",
+        "https://www.oecd.org/en/topics/ai-principles.html"
+      ],
+      [
+        "UK AI regulatory principles",
+        "https://www.gov.uk/government/publications/implementing-the-uks-ai-regulatory-principles-initial-guidance-for-regulators/implementing-the-uks-ai-regulatory-principles-initial-guidance-for-regulators"
+      ]
+    ];
+
+    const departmentSelect =
+      document.getElementById("departmentSelect");
+
+    const scenarioSelect =
+      document.getElementById("scenarioSelect");
+
+    function fillList(id, values) {
+      const items = values.map(value => {
+        const item = document.createElement("li");
+        item.textContent = value;
+        return item;
+      });
+
+      document.getElementById(id).replaceChildren(...items);
+    }
+
+    function recordEvent(action, detail) {
+      const item = document.createElement("li");
+      const time = document.createElement("time");
+      const heading = document.createElement("strong");
+      const description = document.createElement("span");
+
+      const now = new Date();
+
+      time.dateTime = now.toISOString();
+      time.textContent = now.toLocaleTimeString("en-GB");
+      heading.textContent = action;
+      description.textContent = detail;
+
+      item.append(time, heading, description);
+
+      document.getElementById("auditTrail").append(item);
+    }
+
+    function renderGrdReferences(key) {
+      const items = scenarioGrdReferences[key].map(reference => {
+        const [number, name, reason] = reference;
+
+        const item = document.createElement("li");
+        const heading = document.createElement("strong");
+        const explanation = document.createElement("span");
+
+        heading.textContent = `GRD ${number} · ${name}`;
+        explanation.textContent = reason;
+
+        item.append(heading, explanation);
+        return item;
+      });
+
+      document
+        .getElementById("scenarioGrdList")
+        .replaceChildren(...items);
+    }
+
+    function renderFrameworkReferences(key) {
+      const row = scenarioFrameworkRelevance[key];
+
+      document.getElementById("frameworkScenarioTitle")
+        .textContent = row[0];
+
+      document.getElementById("scenarioFrameworkThemes")
+        .textContent = row[5];
+
+      const cards = frameworkReferenceLinks.map(
+        ([name, url], index) => {
+          const card = document.createElement("div");
+          const heading = document.createElement("h3");
+          const text = document.createElement("p");
+          const link = document.createElement("a");
+
+          card.className = "framework-card";
+          heading.textContent = name;
+          text.textContent = row[index + 1] + " ";
+
+          link.href = url;
+          link.target = "_blank";
+          link.rel = "noopener noreferrer";
+          link.textContent = "Source reference ↗";
+
+          text.append(link);
+          card.append(heading, text);
+
+          return card;
+        }
+      );
+
+      document
+        .getElementById("scenarioFrameworkGrid")
+        .replaceChildren(...cards);
+    }
+
+    function updateScenario() {
+      const key = scenarioSelect.value;
+      const data = scenarios[key];
+
+      renderGrdReferences(key);
+      renderFrameworkReferences(key);
+
+      const level =
+        data.tier === "Low"
+          ? "green"
+          : data.tier === "Medium"
+            ? "amber"
+            : "red";
+
+      const indicator = document.getElementById("riskIndicator");
+
+      indicator.dataset.level = level;
+      indicator.title =
+        `${data.tier} illustrative exposure — ${data.title}`;
+
+      document.getElementById("riskTier").textContent =
+        level === "green"
+          ? "Green light"
+          : level === "amber"
+            ? "Amber issue"
+            : "Red issue";
+
+      const fields = {
+        shortQuestion: data.scenario,
+        sharedResponsibility: data.shared,
+        companyRiskText: data.risk,
+        companyRiskIssue: data.issue,
+        articleLabel: data.article,
+        articleWhy: data.why,
+        departmentContext: departmentSelect.value
+      };
+
+      for (const [id, value] of Object.entries(fields)) {
+        document.getElementById(id).textContent = value;
+      }
+
+      fillList("departmentResponsibility", data.responsibility);
+      fillList("preventionList", data.prevention);
+
+      document.getElementById("articleLink").href =
+        "https://eur-lex.europa.eu/eli/reg/2024/1689/" +
+        `2026-07-27/eng#art_${data.number}`;
+
+      document.getElementById("articleDetail").open = false;
+    }
+
+    function updateDepartment() {
+      recordEvent(
+        "Department selected",
+        departmentSelect.value
+      );
+
+      const options = departments[departmentSelect.value].map(key => {
+        const option = document.createElement("option");
+        option.value = key;
+        option.textContent = scenarios[key].title;
+        return option;
+      });
+
+      scenarioSelect.replaceChildren(...options);
+
+      updateScenario();
+
+      recordEvent(
+        "Default scenario displayed",
+        scenarios[scenarioSelect.value].title
+      );
+    }
+
+    departmentSelect.addEventListener(
+      "change",
+      updateDepartment
+    );
+
+    scenarioSelect.addEventListener("change", () => {
+      updateScenario();
+
+      recordEvent(
+        "Scenario selected",
+        scenarios[scenarioSelect.value].title
+      );
+    });
+
+    recordEvent(
+      "Demo opened",
+      "No assessment or approval performed."
+    );
+
+    updateDepartment();
+  </script>
+</body>
+</html>
