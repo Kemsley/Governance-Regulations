@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
 <title>CORESTATE | Governance Systems Management — Demo Only</title>
 
 <style>
@@ -35,13 +36,14 @@ main {
   display: none !important;
 }
 
-/* Original header */
+/* HEADER */
 
 .gsm-approved-header {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  gap: 0;
   max-width: 1180px;
   margin: 0 auto 30px;
   padding: 12px 0 4px;
@@ -78,7 +80,7 @@ main {
   letter-spacing: 1.2px;
 }
 
-/* Original department, scenario and risk controls */
+/* DEPARTMENT, PRIORITY AND RISK CONTROLS */
 
 .scenario-select {
   display: grid;
@@ -169,7 +171,7 @@ select {
   box-shadow: 0 0 0 3px #c73e3525;
 }
 
-/* Original three-column layout */
+/* APPROVED THREE-COLUMN LAYOUT */
 
 .compact-columns {
   display: grid;
@@ -200,7 +202,7 @@ select {
 }
 
 .panel h3 {
-  margin: 14px 0 4px;
+  margin: 14px 0 5px;
   font-size: 13px;
 }
 
@@ -227,77 +229,13 @@ select {
   line-height: 1.3;
 }
 
-.scenario-in-panel {
-  margin: 0 0 12px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--line);
-}
-
-.scenario-in-panel h3 {
-  margin: 0 0 5px;
-  font-size: 12px;
-}
-
-.scenario-in-panel #shortQuestion {
-  margin: 0;
-  color: var(--ink);
-  font-size: 13px;
-  line-height: 1.5;
-}
-
-.department-context {
-  margin: 0 0 12px;
-  color: var(--muted);
-  font-size: 11px;
-}
-
-.responsibility-block {
-  margin-bottom: 10px;
-  padding-bottom: 10px;
-  border-bottom: 1px solid var(--line);
-}
-
-.responsibility-block h3 {
-  margin: 0 0 7px;
-  font-size: 13px;
-}
-
-.responsibility-block ul {
-  margin: 6px 0 10px;
-  padding-left: 17px;
-}
-
-.responsibility-block li {
-  margin: 5px 0;
-  font-size: 13px;
-}
-
-.responsibility-block details,
-.responsibility-block details p {
-  font-size: 12px;
-}
-
 ul {
   margin: 6px 0 12px;
-  padding-left: 18px;
+  padding-left: 17px;
 }
 
 li {
-  margin: 4px 0;
-}
-
-.prevention-only #preventionList {
-  margin: 0;
-  padding-left: 17px;
-}
-
-.prevention-only #preventionList li {
   margin: 8px 0;
-  font-size: 13px;
-}
-
-.compact-risk p {
-  margin: 10px 0;
   font-size: 13px;
 }
 
@@ -312,6 +250,75 @@ summary {
   font-size: 11px;
 }
 
+button {
+  cursor: pointer;
+  border: 1px solid var(--line);
+  border-radius: 7px;
+  background: var(--paper);
+  color: var(--ink);
+  font: 700 12px/1.3 "Segoe UI", Arial, sans-serif;
+  padding: 10px;
+}
+
+button:focus-visible,
+select:focus-visible,
+summary:focus-visible,
+a:focus-visible {
+  outline: 3px solid #738d62;
+  outline-offset: 2px;
+}
+
+/* DEPARTMENT PRIORITIES */
+
+.priority-list {
+  margin: 0 0 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.priority-choice {
+  display: block;
+  width: 100%;
+  padding: 9px 0;
+  text-align: left;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--ink);
+  font: 600 13px/1.45 "Segoe UI", Arial, sans-serif;
+}
+
+.priority-choice[aria-pressed="true"] {
+  color: #194334;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.priority-choice small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 400;
+  text-decoration: none;
+}
+
+#priorityDetail p,
+#requirementsContent p,
+#requirementsContent li,
+#departmentArticles p {
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.priority-situation {
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--line);
+}
+
+.priority-overdue {
+  color: #983027 !important;
+  font-weight: 600;
+}
+
 .article-detail {
   margin-top: 14px;
   padding-top: 12px;
@@ -319,12 +326,20 @@ summary {
   font-size: 12px;
 }
 
-.article-detail p {
-  font-size: 12px;
+.requirement-article {
+  padding: 8px 0;
+  border-bottom: 1px solid var(--line);
 }
 
-.article-detail a {
+.requirement-article a,
+#departmentArticles a {
   color: var(--green);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.requirement-article p {
+  margin: 4px 0 0;
 }
 
 .scenario-grd {
@@ -336,13 +351,11 @@ summary {
 }
 
 .scenario-grd summary {
-  color: var(--green);
   font-size: 13px;
 }
 
 .scenario-grd ul {
   margin: 10px 0;
-  padding-left: 17px;
 }
 
 .scenario-grd li strong,
@@ -360,12 +373,37 @@ summary {
   line-height: 1.5;
 }
 
-.scenario-grd .small {
-  margin: 8px 0 0;
-  font-size: 10px;
+.priority-reference {
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid var(--line);
+  font-size: 12px;
 }
 
-/* Evidence panel: lighter command-style event stream */
+/* GOVERNANCE OVERVIEW */
+
+.governance-row {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.governance-row p {
+  margin: 4px 0;
+  font-size: 12px;
+}
+
+.governance-open {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: var(--green);
+  font-size: 12px;
+  text-align: left;
+  text-decoration: underline;
+}
+
+/* LIGHTER COMMAND-STYLE EVIDENCE PANEL */
 
 .compact-columns .audit-panel {
   background: #dce5dc;
@@ -432,12 +470,10 @@ summary {
   width: 100%;
   margin: 2px 0 10px;
   padding: 8px;
-  border: 1px solid #194334;
-  border-radius: 7px;
+  border-color: #194334;
   background: #194334;
   color: #fff;
-  cursor: pointer;
-  font: 700 11px/1.3 "Segoe UI", Arial, sans-serif;
+  font-size: 11px;
 }
 
 #evidenceAdvance:disabled {
@@ -463,7 +499,7 @@ summary {
   font-size: 10px;
 }
 
-/* Original framework section */
+/* FRAMEWORK REFERENCES */
 
 .governance-foundations {
   max-width: 1180px;
@@ -531,13 +567,7 @@ summary {
   font-size: 11px;
 }
 
-button:focus-visible,
-select:focus-visible,
-summary:focus-visible,
-a:focus-visible {
-  outline: 3px solid #738d62;
-  outline-offset: 2px;
-}
+/* RESPONSIVE LAYOUT */
 
 @media (max-width: 1000px) {
   .compact-columns {
@@ -594,6 +624,14 @@ a:focus-visible {
     max-width: 360px;
   }
 }
+
+@media (pointer: coarse) {
+  .priority-choice,
+  .governance-open,
+  #evidenceAdvance {
+    min-height: 44px;
+  }
+}
 </style>
 </head>
 
@@ -619,7 +657,7 @@ a:focus-visible {
     </div>
   </header>
 
-  <section class="scenario-select" aria-label="Scenario controls">
+  <section class="scenario-select" aria-label="Department controls">
     <div class="department-control">
       <label for="departmentSelect">Choose a department</label>
 
@@ -627,12 +665,12 @@ a:focus-visible {
         <option value="Human Resources">Human Resources</option>
         <option value="Procurement">Procurement</option>
         <option value="Engineering">Engineering</option>
+        <option value="Governance overview">Governance overview</option>
       </select>
     </div>
 
     <div class="scenario-control">
-      <label for="scenarioSelect">Choose a scenario</label>
-
+      <label for="scenarioSelect">Choose a priority</label>
       <select id="scenarioSelect"></select>
     </div>
 
@@ -662,63 +700,29 @@ a:focus-visible {
 
   <div class="compact-columns">
 
-    <section class="panel prevention prevention-only">
-      <h2>Prevention</h2>
+    <section class="panel prevention-only">
+      <h2 id="priorityHeading">Department priorities</h2>
 
-      <div class="scenario-in-panel">
-        <h3>The situation</h3>
-        <p id="shortQuestion"></p>
-      </div>
+      <div
+        id="priorityList"
+        class="priority-list"
+        aria-label="Department priorities"
+      ></div>
 
-      <div id="departmentContext" class="department-context"></div>
+      <div id="priorityDetail"></div>
 
-      <div class="responsibility-block">
-        <h3>Department actions</h3>
-        <ul id="departmentResponsibility"></ul>
-
-        <details>
-          <summary>Shared responsibility</summary>
-          <p id="sharedResponsibility"></p>
-        </details>
-      </div>
-
-      <details class="scenario-grd">
-        <summary>Applicable GRD references</summary>
-
-        <ul id="scenarioGrdList"></ul>
-
-        <p class="small">
-          Relevant governance requirements for this example;
-          applicability does not mean the requirement has been satisfied.
-        </p>
+      <details class="article-detail" id="departmentArticlesWrap">
+        <summary>Department article references</summary>
+        <div id="departmentArticles"></div>
       </details>
-
-      <ul id="preventionList"></ul>
     </section>
 
     <section class="panel compact-risk">
       <div class="risk-heading">
-        <h2>Company risk</h2>
+        <h2 id="actionsHeading">Actions &amp; requirements</h2>
       </div>
 
-      <p id="companyRiskText"></p>
-
-      <h3>Known issue</h3>
-      <p id="companyRiskIssue"></p>
-
-      <details class="article-detail">
-        <summary id="articleLabel"></summary>
-        <p id="articleWhy"></p>
-
-        <a
-          id="articleLink"
-          href="https://eur-lex.europa.eu/eli/reg/2024/1689/oj/eng"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Read the EU provision →
-        </a>
-      </details>
+      <div id="requirementsContent" aria-live="polite"></div>
     </section>
 
     <section class="panel audit-panel">
@@ -726,7 +730,7 @@ a:focus-visible {
 
       <div class="evidence-stream-label">
         <span>● DEMO EVENT STREAM</span>
-        <span id="evidenceCase">CASE DEMO-001</span>
+        <span id="evidenceCase"></span>
       </div>
 
       <ol id="auditTrail" aria-live="polite"></ol>
@@ -742,16 +746,13 @@ a:focus-visible {
       </button>
 
       <details class="evidence-record">
-        <summary>View sample evidence record</summary>
-
-        <p id="evidenceRecord">
-          No evidence submitted in this example yet.
-        </p>
+        <summary>View sample evidence records</summary>
+        <div id="evidenceRecord"></div>
       </details>
 
       <p class="small">
-        Simulated workflow · no emails sent or documents uploaded.
-        Evidence submission does not establish compliance.
+        Illustrative records only. No emails sent or documents uploaded.
+        Submission does not establish compliance.
       </p>
     </section>
 
@@ -759,7 +760,7 @@ a:focus-visible {
 
   <details class="governance-foundations">
     <summary>
-      Framework relevance to this scenario · ISO, NIST, OECD &amp; UK
+      Framework relevance · ISO, NIST, OECD &amp; UK
     </summary>
 
     <div class="foundations-content">
@@ -779,10 +780,9 @@ a:focus-visible {
         </p>
 
         <p class="small">
-          Illustrative scenario interpretation of the frameworks,
-          not a clause-by-clause mapping or a finding of compliance.
-          The applicable GRD references are shown in Prevention.
-          Evidence has not been verified.
+          Illustrative framework connections, not a clause-by-clause
+          mapping or a finding of compliance. GRD references appear
+          with the selected priority. Evidence has not been verified.
         </p>
       </div>
     </div>
@@ -792,6 +792,7 @@ a:focus-visible {
     © CORESTATE Ltd · Illustrative scenario guidance.
     Example responsibility assignments; confirm against your organisation.
     EU applicability depends on the system, role and provision.
+    Demo activity resets when the page reloads.
   </div>
 
 </main>
@@ -799,42 +800,17 @@ a:focus-visible {
 <script>
 "use strict";
 
+/* DEMO SCENARIOS */
+
 const scenarios = {
   literacy: {
-    title: "Staff using AI without preparation",
-
     scenario:
-      "A company introduces AI tools without workshops, practical " +
-      "guidance or checks that staff can recognise unreliable outputs.",
-
-    prevention: [
-      "Prepare staff for the AI tasks they actually perform: " +
-      "checking outputs, handling sensitive information and " +
-      "recognising limitations.",
-
-      "Use practical exercises and role-specific guidance; " +
-      "check capability rather than attendance alone.",
-
-      "Give staff a clear route to ask for help or escalate " +
-      "uncertain results."
-    ],
+      "A company introduces AI tools without workshops, practical guidance " +
+      "or checks that staff can recognise unreliable outputs.",
 
     risk:
-      "Staff may rely on false outputs, expose information " +
-      "or give customers incorrect advice.",
-
-    issue:
-      "Tools are available, but staff have not been prepared " +
-      "to use them responsibly.",
-
-    article: "Article 4 · AI literacy",
-
-    why:
-      "Addresses AI literacy for providers and deployers. " +
-      "Preparation should reflect people’s roles, experience " +
-      "and the context of use; a workshop alone is not the objective.",
-
-    number: "4",
+      "Staff may rely on false outputs, expose information or give " +
+      "customers incorrect advice.",
 
     responsibility: [
       "Issue role-specific AI training schedules.",
@@ -842,48 +818,18 @@ const scenarios = {
       "Follow up outstanding training with line managers."
     ],
 
-    shared:
-      "Managers confirm readiness for their teams; Governance " +
-      "reviews the supporting evidence.",
-
     tier: "Medium"
   },
 
   recruitment: {
-    title: "Recruitment AI treated as ordinary software",
-
     scenario:
-      "HR switches on AI applicant ranking as a routine software " +
-      "feature, without assessing how it influences shortlisting " +
-      "or who could be disadvantaged.",
-
-    prevention: [
-      "Identify whether the tool filters, ranks or materially " +
-      "influences candidate selection.",
-
-      "Assess classification under Article 6 and Annex III; " +
-      "examine the supplier’s documentation and suitability evidence.",
-
-      "Assign trained reviewers with the authority and information " +
-      "needed to question recommendations."
-    ],
+      "HR switches on AI applicant ranking as a routine software feature, " +
+      "without assessing how it influences shortlisting or who could " +
+      "be disadvantaged.",
 
     risk:
-      "Suitable applicants could be excluded unfairly, exposing " +
-      "the company to complaints and recruitment disputes.",
-
-    issue:
-      "The actual recruitment use has not been assessed.",
-
-    article: "Article 6 & Annex III · Classification",
-
-    why:
-      "Recruitment and selection uses can fall within high-risk " +
-      "classification. Assess the specific function and any " +
-      "applicable exceptions; a human final decision does not " +
-      "by itself settle classification.",
-
-    number: "6",
+      "Suitable applicants could be excluded unfairly, exposing the " +
+      "company to complaints and recruitment disputes.",
 
     responsibility: [
       "Document where AI is used in recruitment.",
@@ -891,47 +837,17 @@ const scenarios = {
       "Keep recruitment decisions and review records."
     ],
 
-    shared:
-      "Procurement obtains supplier evidence; Governance " +
-      "coordinates classification and compliance review.",
-
     tier: "High"
   },
 
   policy: {
-    title: "Approval policy written but not implemented",
-
     scenario:
-      "Company policy requires human approval before an AI takes " +
-      "action. In practice, the workflow allows it to proceed " +
-      "without that approval.",
-
-    prevention: [
-      "Build the required approval into the workflow before " +
-      "the relevant action can proceed.",
-
-      "Name the approver and record what they authorised.",
-
-      "Test missing, refused and expired approvals to confirm " +
-      "that the workflow follows the policy."
-    ],
+      "Company policy requires human approval before an AI takes action. " +
+      "In practice, the workflow allows it to proceed without that approval.",
 
     risk:
-      "Unauthorised actions could affect customers, records or " +
-      "finances while the company wrongly assumes approval is enforced.",
-
-    issue:
-      "The written policy and the operating workflow do not match.",
-
-    article: "Articles 14 & 26 · Human oversight",
-
-    why:
-      "For applicable high-risk AI, these provisions address oversight " +
-      "design and deployer responsibilities. A particular approval gate " +
-      "is a practical control, not a universal requirement for every " +
-      "AI action.",
-
-    number: "14",
+      "Unauthorised actions could affect customers, records or finances " +
+      "while the company wrongly assumes approval is enforced.",
 
     responsibility: [
       "Implement the agreed approval step.",
@@ -939,46 +855,18 @@ const scenarios = {
       "Record test results and unresolved faults."
     ],
 
-    shared:
-      "The business owner defines the approval requirement; " +
-      "Governance reviews the control evidence.",
-
     tier: "High"
   },
 
   chatbot: {
-    title: "Customer-service AI bought without disclosure checks",
-
     scenario:
       "Procurement buys a customer-service chatbot without checking " +
       "whether the supplied interface clearly tells customers they " +
       "are interacting with AI.",
 
-    prevention: [
-      "Include customer-facing AI disclosure in the purchasing " +
-      "requirements.",
-
-      "Ask the supplier to demonstrate the live notice and document " +
-      "who maintains it.",
-
-      "Verify the configured service before acceptance and launch."
-    ],
-
     risk:
       "Customers may be misled about the service, leading to complaints, " +
       "lost trust and potential transparency non-compliance.",
-
-    issue:
-      "Supplier acceptance checks did not cover customer-facing disclosure.",
-
-    article: "Article 50 · Transparency",
-
-    why:
-      "Covers transparency for certain AI interactions, including " +
-      "provider duties to inform people when they interact directly " +
-      "with AI, subject to exceptions such as where this is obvious.",
-
-    number: "50",
 
     responsibility: [
       "Include AI disclosure in supplier requirements.",
@@ -986,47 +874,18 @@ const scenarios = {
       "Record acceptance checks and outstanding issues."
     ],
 
-    shared:
-      "The service owner checks the live customer experience; " +
-      "Engineering configures the notice.",
-
     tier: "Medium"
   },
 
   repurpose: {
-    title: "AI repurposed without reassessment",
-
     scenario:
       "A general assistant is adapted to recommend employee dismissals, " +
       "but the company keeps the original assessment and does not " +
       "review its new use.",
 
-    prevention: [
-      "Document the new intended use and who will be affected.",
-
-      "Reassess classification, impacts and responsibilities " +
-      "before deployment.",
-
-      "Check whether the change triggers provider obligations " +
-      "and what evidence and controls the new use needs."
-    ],
-
     risk:
       "Employment decisions could rely on an unsuitable system, " +
       "creating harm to workers and legal exposure.",
-
-    issue:
-      "The assessment covers the old task rather than the new " +
-      "employment use.",
-
-    article: "Articles 6 & 25 · Changed use and responsibilities",
-
-    why:
-      "A changed purpose can affect classification and, in the " +
-      "circumstances specified in Article 25, cause an organisation " +
-      "to assume provider responsibilities.",
-
-    number: "25",
 
     responsibility: [
       "Record the proposed change of use.",
@@ -1034,48 +893,19 @@ const scenarios = {
       "Keep change approvals and test results."
     ],
 
-    shared:
-      "HR owns the employment use; Governance coordinates " +
-      "reassessment of classification and responsibilities.",
-
     tier: "High"
   },
 
   emotion: {
-    title:
-      "Staff emotion-monitoring AI purchased without screening",
-
     scenario:
-      "Procurement selects an AI product that infers employees’ " +
-      "emotions from facial or voice data for performance monitoring, " +
-      "without screening the proposed use against prohibited practices.",
-
-    prevention: [
-      "Screen the proposed use against prohibited practices before " +
-      "buying or deploying it.",
-
-      "Do not deploy a prohibited workplace emotion-inference use.",
-
-      "Use appropriate performance evidence; assess any claimed " +
-      "medical or safety exception separately."
-    ],
+      "Procurement selects an AI product that infers employees’ emotions " +
+      "from facial or voice data for performance monitoring, without " +
+      "screening the proposed use against prohibited practices.",
 
     risk:
-      "Employees could be judged unfairly on inferred emotions " +
-      "rather than their work. The company could also operate " +
-      "a prohibited AI practice.",
-
-    issue:
-      "The proposed workplace use was not screened before purchasing.",
-
-    article: "Article 5(1)(f) · Workplace emotion inference",
-
-    why:
-      "Prohibits AI used to infer emotions in workplaces and " +
-      "education institutions, except for systems intended " +
-      "for medical or safety reasons.",
-
-    number: "5",
+      "Employees could be judged unfairly on inferred emotions rather " +
+      "than their work. The company could also operate a prohibited " +
+      "AI practice.",
 
     responsibility: [
       "Record the product’s intended workplace use.",
@@ -1083,13 +913,11 @@ const scenarios = {
       "Hold the purchase pending their decision."
     ],
 
-    shared:
-      "HR defines the intended workplace use; Governance and Legal " +
-      "assess permissibility.",
-
     tier: "Severe"
   }
 };
+
+/* DEPARTMENTS */
 
 const departments = {
   "Human Resources": ["literacy", "recruitment"],
@@ -1097,7 +925,9 @@ const departments = {
   "Engineering": ["policy", "repurpose"]
 };
 
-const scenarioGrdReferences = {
+/* GRD REFERENCES */
+
+const grdReferences = {
   literacy: [
     [
       1,
@@ -1156,8 +986,8 @@ const scenarioGrdReferences = {
     [
       1,
       "Conditions of Use",
-      "Review the revised purpose before using the assistant " +
-      "for employment decisions."
+      "Review the revised purpose before using the assistant for " +
+      "employment decisions."
     ],
     [
       5,
@@ -1167,8 +997,7 @@ const scenarioGrdReferences = {
     [
       11,
       "Change and Drift Detection",
-      "Record and review the change in use and its effect " +
-      "on the assessment."
+      "Record and review the change in use and its effect on the assessment."
     ]
   ],
 
@@ -1176,8 +1005,7 @@ const scenarioGrdReferences = {
     [
       3,
       "Jurisdictional Compliance",
-      "Review the proposed workplace use against applicable " +
-      "legal restrictions."
+      "Review the proposed workplace use against applicable legal restrictions."
     ],
     [
       4,
@@ -1194,117 +1022,89 @@ const scenarioGrdReferences = {
   ]
 };
 
-const scenarioFrameworkRelevance = {
+/* SUPPORTING FRAMEWORK CONNECTIONS */
+
+const frameworkRelevance = {
   literacy: [
     "Staff using AI without preparation",
-
-    "Competence and awareness: define the preparation needed for " +
-    "staff roles and keep evidence of readiness.",
-
-    "GOVERN: clarify responsibilities and provide training for " +
-    "the AI tasks people perform.",
-
-    "Accountability and human agency: equip staff to question " +
-    "unreliable outputs and seek help.",
-
-    "Accountability and governance: name the owner of staff " +
-    "preparation and the route for concerns.",
-
+    "Competence and awareness: define the preparation needed for staff " +
+    "roles and keep evidence of readiness.",
+    "GOVERN: clarify responsibilities and provide training for the AI " +
+    "tasks people perform.",
+    "Accountability and human agency: equip staff to question unreliable " +
+    "outputs and seek help.",
+    "Accountability and governance: name the owner of staff preparation " +
+    "and the route for concerns.",
     "Human agency and oversight · Accountability · Responsible use"
   ],
 
   recruitment: [
     "Recruitment AI treated as ordinary software",
-
-    "AI impact and risk assessment: review effects on applicants " +
-    "and document recruitment responsibilities.",
-
+    "AI impact and risk assessment: review effects on applicants and " +
+    "document recruitment responsibilities.",
     "MAP and MEASURE: identify affected applicants and evaluate " +
     "potential harmful bias in ranking.",
-
     "Human rights and fairness: examine discriminatory exclusion " +
     "and how applicants can understand decisions.",
-
     "Fairness and contestability: provide meaningful review and " +
     "routes to challenge recruitment outcomes.",
-
     "Fairness and non-discrimination · Human oversight · Accountability"
   ],
 
   policy: [
     "Approval policy written but not implemented",
-
     "Operational governance: compare the documented approval requirement " +
     "with the working process and retain review evidence.",
-
     "GOVERN and MANAGE: assign approval authority and address gaps " +
     "between policy and practice.",
-
     "Accountability: identify who authorised an action and retain " +
     "an understandable record.",
-
     "Accountability and governance: ensure responsibility for approval " +
     "is clear in the actual workflow.",
-
     "Authority and autonomy limits · Accountability · Audit evidence"
   ],
 
   chatbot: [
     "Customer-service AI bought without disclosure checks",
-
     "Third-party and customer communication review: include disclosure " +
     "expectations in supplier acceptance checks.",
-
     "GOVERN and MAP: define supplier responsibilities and understand " +
     "the customer interaction before launch.",
-
     "Transparency and explainability: help customers recognise when " +
     "they are interacting with AI.",
-
-    "Appropriate transparency: review the live customer notice and " +
-    "assign responsibility for maintaining it.",
-
+    "Appropriate transparency: review the live customer notice " +
+    "and assign responsibility for maintaining it.",
     "Conditions of use · Transparency · Supplier accountability"
   ],
 
   repurpose: [
     "AI repurposed without reassessment",
-
     "Change and impact review: reassess the management arrangements " +
     "and risks for the proposed employment use.",
-
     "MAP and MANAGE: revisit the changed context, affected workers " +
     "and risk response before release.",
-
     "Accountability and human rights: reassess consequences when an " +
     "assistant is repurposed for dismissal recommendations.",
-
     "Fairness and accountability: review employment impacts and " +
     "establish responsibility for the changed use.",
-
     "Conditions of use · Mission alignment · Change and drift detection"
   ],
 
   emotion: [
     "Staff emotion-monitoring AI purchased without screening",
-
     "Impact and risk review: assess the proposed workplace purpose, " +
     "employee impacts and applicable restrictions before purchasing.",
-
-    "MAP and GOVERN: identify workplace context, sensitive data and " +
-    "relevant legal requirements before procurement proceeds.",
-
+    "MAP and GOVERN: identify workplace context, sensitive data " +
+    "and relevant legal requirements before procurement proceeds.",
     "Human rights, fairness and privacy: examine the effects of " +
     "inferring emotions from employees’ facial or voice data.",
-
     "Fairness and accountability: review employee impacts and refer " +
     "permissibility to the responsible legal and governance owners.",
-
     "Jurisdictional compliance · Data stewardship · Fairness"
   ]
 };
 
-const frameworkReferenceLinks = [
+const frameworkLinks = [
   [
     "ISO/IEC 42001",
     "https://www.iso.org/standard/81230.html"
@@ -1325,314 +1125,1134 @@ const frameworkReferenceLinks = [
   ]
 ];
 
-const evidenceByScenario = {
-  literacy: [
-    "training-plan.pdf",
-    "capability-check-results.pdf",
-    "Training completion evidence"
-  ],
+/* DEPARTMENT PRIORITIES AND ARTICLE REFERENCES */
 
-  recruitment: [
-    "recruitment-use-record.pdf",
-    "supplier-review.pdf",
-    "Applicant impact and review evidence"
-  ],
+const priorityInfo = {
+  literacy: {
+    name: "AI literacy preparation",
+    owner: "HR learning lead",
+    offset: 4,
 
-  policy: [
-    "approval-config.json",
-    "approver-register.pdf",
-    "Approval test results"
-  ],
+    taken: [
+      "Staff groups and AI tasks recorded.",
+      "Role-specific training plan drafted."
+    ],
 
-  chatbot: [
-    "supplier-disclosure.pdf",
-    "customer-notice.pdf",
-    "Live disclosure acceptance checks"
-  ],
+    missing: [
+      "Capability-check results",
+      "Training completion records"
+    ],
 
-  repurpose: [
-    "change-request.pdf",
-    "revised-purpose.pdf",
-    "Changed-use review evidence"
-  ],
+    files: [
+      "capability-check-results.pdf",
+      "training-plan.pdf"
+    ],
 
-  emotion: [
-    "proposed-use.pdf",
-    "supplier-specification.pdf",
-    "Legal and Governance review decision"
-  ]
+    layers:
+      "Domain A · Foundation; Human & transparency",
+
+    articles: [
+      [
+        4,
+        "AI literacy",
+        "For providers and deployers: preparation should reflect staff " +
+        "roles, knowledge and the context of use."
+      ]
+    ],
+
+    context:
+      "Domain B · Article 96: Commission guidance is a supporting " +
+      "implementation reference; it does not create an HR duty " +
+      "to issue that guidance."
+  },
+
+  recruitment: {
+    name: "Recruitment AI review",
+    owner: "HR recruitment lead",
+    offset: 2,
+
+    taken: [
+      "Recruitment use recorded.",
+      "Supplier documentation requested."
+    ],
+
+    missing: [
+      "Classification review",
+      "Applicant impact and oversight evidence"
+    ],
+
+    files: [
+      "classification-review.pdf",
+      "recruitment-use-record.pdf"
+    ],
+
+    layers:
+      "Domain A · Foundation; Human & transparency; Responsibilities",
+
+    articles: [
+      [
+        6,
+        "High-risk classification",
+        "Review the actual recruitment function against Article 6 " +
+        "and Annex III; document any claimed exception."
+      ],
+      [
+        26,
+        "Deployer responsibilities",
+        "Where the system is high-risk and the company is its deployer, " +
+        "review the relevant deployment and oversight responsibilities."
+      ]
+    ],
+
+    context:
+      "Domain B · Articles 40–41 concern standards and common " +
+      "specifications. Article 43 concerns the applicable provider " +
+      "conformity-assessment route. HR requests relevant supplier " +
+      "evidence; institutional functions do not become HR responsibilities."
+  },
+
+  policy: {
+    name: "Human approval controls",
+    owner: "Engineering lead",
+    offset: 3,
+
+    taken: [
+      "Approval requirement documented.",
+      "Workflow configuration recorded."
+    ],
+
+    missing: [
+      "Approval test results",
+      "Evidence of approval coverage across action paths"
+    ],
+
+    files: [
+      "approval-test-results.pdf",
+      "approval-config.json"
+    ],
+
+    layers:
+      "Domain A · Operational requirements; Human & transparency; " +
+      "Assurance & monitoring",
+
+    articles: [
+      [
+        14,
+        "Human oversight",
+        "For applicable high-risk AI, review how effective human " +
+        "oversight is built into the system."
+      ],
+      [
+        26,
+        "Deployer responsibilities",
+        "For an applicable high-risk deployment, assign the people, " +
+        "authority and competence needed for oversight."
+      ]
+    ],
+
+    context:
+      "Domain B · Articles 40–41 provide standards and common-specification " +
+      "context where relevant. A company approval rule must also be " +
+      "implemented and tested; the example does not claim every AI " +
+      "action legally requires approval."
+  },
+
+  repurpose: {
+    name: "Changed-purpose review",
+    owner: "Engineering change owner",
+    offset: 5,
+
+    taken: [
+      "Change request logged.",
+      "New employment-related purpose described."
+    ],
+
+    missing: [
+      "Revised classification review",
+      "Provider-role and change-approval evidence"
+    ],
+
+    files: [
+      "revised-classification-review.pdf",
+      "change-request.pdf"
+    ],
+
+    layers:
+      "Domain A · Foundation; Responsibilities; Assurance & monitoring",
+
+    articles: [
+      [
+        6,
+        "High-risk classification",
+        "Revisit classification for the new intended employment use."
+      ],
+      [
+        25,
+        "Value-chain responsibilities",
+        "Review whether the circumstances of the modification or " +
+        "changed purpose cause the company to take on provider " +
+        "responsibilities."
+      ]
+    ],
+
+    context:
+      "Domain B · Articles 40–41 provide standards context. Review the " +
+      "Article 43 conformity-assessment route if provider duties are " +
+      "triggered; involvement of a notified body depends on the " +
+      "applicable route."
+  },
+
+  chatbot: {
+    name: "Supplier transparency checks",
+    owner: "Procurement lead",
+    offset: -2,
+
+    taken: [
+      "Supplier and intended service recorded.",
+      "Disclosure demonstration requested."
+    ],
+
+    missing: [
+      "Live customer disclosure checks",
+      "Supplier acceptance evidence"
+    ],
+
+    files: [
+      "live-disclosure-checks.pdf",
+      "customer-notice.pdf"
+    ],
+
+    layers:
+      "Domain A · Human & transparency; Responsibilities",
+
+    articles: [
+      [
+        50,
+        "Transparency",
+        "For direct AI interaction, check the relevant provider " +
+        "disclosure duty and exceptions. Procurement obtains evidence " +
+        "and assigns who maintains the live notice."
+      ]
+    ],
+
+    context:
+      "Domain B · Article 96 guidance can support implementation. " +
+      "Articles 40–41 are relevant only where applicable standards " +
+      "or specifications are relied on; a chatbot is not automatically " +
+      "high-risk."
+  },
+
+  emotion: {
+    name: "Restricted-use screening",
+    owner: "Procurement compliance owner",
+    offset: 1,
+
+    taken: [
+      "Proposed workplace use recorded.",
+      "Purchase referred to Legal and Governance."
+    ],
+
+    missing: [
+      "Recorded permissibility decision",
+      "Supplier purpose and feature clarification"
+    ],
+
+    files: [
+      "permissibility-review.pdf",
+      "supplier-specification.pdf"
+    ],
+
+    layers:
+      "Domain A · Foundation; Responsibilities",
+
+    articles: [
+      [
+        5,
+        "Prohibited AI practices",
+        "Article 5(1)(f): screen workplace emotion inference against " +
+        "the prohibition and the medical or safety exceptions. " +
+        "Hold the purchase pending the review."
+      ]
+    ],
+
+    context:
+      "Domain B · Article 96 guidance is a supporting reference. " +
+      "Regulatory powers remain with the relevant institutions; " +
+      "Procurement records and escalates the proposed use."
+  }
 };
 
-const departmentSelect = document.getElementById("departmentSelect");
-const scenarioSelect = document.getElementById("scenarioSelect");
+/* SMALL DOM HELPERS */
 
-const trail = document.getElementById("auditTrail");
-const nextAction = document.getElementById("evidenceNext");
-const advanceButton = document.getElementById("evidenceAdvance");
-const evidenceRecord = document.getElementById("evidenceRecord");
+const $ = id => document.getElementById(id);
 
-let evidenceStage = 0;
-let eventSequence = 0;
+function node(tag, text, className) {
+  const element = document.createElement(tag);
 
-function createListItem(text) {
-  const item = document.createElement("li");
-  item.textContent = text;
-  return item;
+  if (text !== undefined) {
+    element.textContent = text;
+  }
+
+  if (className) {
+    element.className = className;
+  }
+
+  return element;
 }
 
-function renderScenarioGrds(key) {
-  const list = document.getElementById("scenarioGrdList");
+function list(items) {
+  const ul = node("ul");
 
-  list.replaceChildren(
-    ...scenarioGrdReferences[key].map(([number, name, reason]) => {
-      const item = document.createElement("li");
-
-      const heading = document.createElement("strong");
-      heading.textContent = "GRD " + number + " · " + name;
-
-      const explanation = document.createElement("span");
-      explanation.textContent = reason;
-
-      item.append(heading, explanation);
-      return item;
-    })
-  );
-}
-
-function renderScenarioFrameworks(key) {
-  const row = scenarioFrameworkRelevance[key];
-
-  document.getElementById("frameworkScenarioTitle").textContent = row[0];
-  document.getElementById("scenarioFrameworkThemes").textContent = row[5];
-
-  document.getElementById("scenarioFrameworkGrid").replaceChildren(
-    ...frameworkReferenceLinks.map(([name, url], index) => {
-      const item = document.createElement("div");
-      item.className = "foundation-item";
-
-      const heading = document.createElement("h3");
-      heading.textContent = name;
-
-      const text = document.createElement("p");
-      text.textContent = row[index + 1] + " ";
-
-      const link = document.createElement("a");
-      link.href = url;
-      link.target = "_blank";
-      link.rel = "noopener noreferrer";
-      link.textContent = "Source reference ↗";
-
-      text.append(link);
-      item.append(heading, text);
-
-      return item;
-    })
-  );
-}
-
-function updateScenario() {
-  const key = scenarioSelect.value;
-  const data = scenarios[key];
-
-  renderScenarioFrameworks(key);
-  renderScenarioGrds(key);
-
-  const level =
-    data.tier === "Low"
-      ? "green"
-      : data.tier === "Medium"
-        ? "amber"
-        : "red";
-
-  const indicator = document.getElementById("riskIndicator");
-
-  indicator.dataset.level = level;
-  indicator.title = data.tier + " illustrative exposure — " + data.title;
-
-  document.getElementById("riskTier").textContent =
-    level === "green"
-      ? "Green light"
-      : level === "amber"
-        ? "Amber issue"
-        : "Red issue";
-
-  const fieldMap = [
-    ["sharedResponsibility", "shared"],
-    ["shortQuestion", "scenario"],
-    ["companyRiskText", "risk"],
-    ["companyRiskIssue", "issue"],
-    ["articleLabel", "article"],
-    ["articleWhy", "why"]
-  ];
-
-  fieldMap.forEach(([id, property]) => {
-    document.getElementById(id).textContent = data[property];
+  items.forEach(text => {
+    ul.append(node("li", text));
   });
 
-  document.getElementById("departmentContext").textContent =
-    departmentSelect.value;
-
-  document.getElementById("departmentResponsibility").replaceChildren(
-    ...data.responsibility.map(createListItem)
-  );
-
-  document.getElementById("preventionList").replaceChildren(
-    ...data.prevention.map(createListItem)
-  );
-
-  document.getElementById("articleLink").href =
-    "https://eur-lex.europa.eu/eli/reg/2024/1689/" +
-    "2026-07-27/eng#art_" + data.number;
-
-  document.querySelector(".article-detail").open = false;
-
-  startEvidenceExample();
+  return ul;
 }
 
-function updateDepartment() {
-  const keys = departments[departmentSelect.value];
+function link(text, url) {
+  const anchor = node("a", text);
 
-  scenarioSelect.replaceChildren(
-    ...keys.map(key => {
-      const option = document.createElement("option");
-      option.value = key;
-      option.textContent = scenarios[key].title;
-      return option;
-    })
+  anchor.href = url;
+  anchor.target = "_blank";
+  anchor.rel = "noopener noreferrer";
+
+  return anchor;
+}
+
+function field(root, label, value, className) {
+  const paragraph = node("p", undefined, className);
+
+  paragraph.append(
+    node("strong", label + ": "),
+    document.createTextNode(value)
   );
 
-  updateScenario();
+  root.append(paragraph);
 }
 
-function logEvidenceEvent(type, detail) {
-  const row = document.createElement("li");
-
-  const time = document.createElement("time");
-  time.textContent =
-    "[" + new Date().toLocaleTimeString("en-GB") + "] EVT-" +
-    String(++eventSequence).padStart(3, "0");
-
-  const heading = document.createElement("strong");
-  heading.textContent = type;
-
-  const description = document.createElement("span");
-  description.textContent = detail;
-
-  row.append(time, heading, description);
-  trail.append(row);
-
-  trail.scrollTop = trail.scrollHeight;
+function departmentFor(key) {
+  return Object.keys(departments).find(
+    department => departments[department].includes(key)
+  );
 }
 
-function startEvidenceExample() {
-  evidenceStage = 0;
-  eventSequence = 0;
-  trail.replaceChildren();
+/* SAMPLE DEADLINES ARE FIXED FOR THE CURRENT DEMO SESSION */
 
-  const key = scenarioSelect.value;
-  const data = scenarios[key];
+const demoStarted = new Date();
 
-  document.getElementById("evidenceCase").textContent =
+function sampleDate(offset) {
+  const date = new Date(demoStarted);
+
+  date.setDate(date.getDate() + offset);
+
+  return date.toLocaleDateString("en-GB", {
+    day: "numeric",
+    month: "short",
+    year: "numeric"
+  });
+}
+
+/* EVIDENCE STATE: KEPT SEPARATELY FOR EVERY PRIORITY */
+
+let sequence = 0;
+
+const state = {};
+const events = [];
+
+Object.keys(priorityInfo).forEach(key => {
+  state[key] = {
+    phase: 0,
+    status: "Evidence requested",
+    files: [],
+    missing: [...priorityInfo[key].missing],
+    history: []
+  };
+
+  const event = {
+    id: ++sequence,
+    time: new Date().toLocaleTimeString("en-GB"),
+    key: key,
+    type: "EVIDENCE_REQUESTED",
+    detail:
+      "owner: " + priorityInfo[key].owner +
+      "\npriority: " + priorityInfo[key].name +
+      "\nrecord: illustrative demo"
+  };
+
+  events.push(event);
+  state[key].history.push(event);
+});
+
+function log(key, type, detail) {
+  const event = {
+    id: ++sequence,
+    time: new Date().toLocaleTimeString("en-GB"),
+    key: key,
+    type: type,
+    detail: detail
+  };
+
+  events.push(event);
+
+  if (key) {
+    state[key].history.push(event);
+  }
+}
+
+function isGovernance() {
+  return $("departmentSelect").value === "Governance overview";
+}
+
+function currentKey() {
+  return $("scenarioSelect").value;
+}
+
+/* RISK INDICATOR */
+
+function renderRisk(keys) {
+  const hasRedIssue = keys.some(
+    key => scenarios[key].tier !== "Medium"
+  );
+
+  const level = hasRedIssue ? "red" : "amber";
+
+  $("riskIndicator").dataset.level = level;
+
+  $("riskTier").textContent =
+    level === "red" ? "Red issue" : "Amber issue";
+
+  $("riskIndicator").title =
+    "Illustrative outstanding governance work; " +
+    "not a statutory risk classification.";
+}
+
+/* ARTICLE REFERENCES */
+
+function renderArticles(root, keys, aggregate = false) {
+  const seen = new Set();
+
+  keys.forEach(key => {
+    priorityInfo[key].articles.forEach(
+      ([number, title, reason]) => {
+        if (aggregate && seen.has(number)) return;
+
+        seen.add(number);
+
+        const row = node(
+          "div",
+          undefined,
+          "requirement-article"
+        );
+
+        row.append(
+          link(
+            "Article " + number + " · " + title,
+            "https://ai-act-service-desk.ec.europa.eu/" +
+            "en/ai-act/article-" + number
+          )
+        );
+
+        if (!aggregate) {
+          row.append(node("p", reason));
+        }
+
+        root.append(row);
+      }
+    );
+  });
+}
+
+/* GRD AND DOMAIN REFERENCES */
+
+function renderReferences(root, key) {
+  const details = node(
+    "details",
+    undefined,
+    "scenario-grd"
+  );
+
+  details.append(node("summary", "GRD references"));
+
+  const ul = node("ul");
+
+  grdReferences[key].forEach(([number, name, reason]) => {
+    const li = node("li");
+
+    li.append(
+      node("strong", "GRD " + number + " · " + name),
+      node("span", reason)
+    );
+
+    ul.append(li);
+  });
+
+  details.append(ul);
+  root.append(details);
+
+  const context = node(
+    "details",
+    undefined,
+    "priority-reference"
+  );
+
+  context.append(
+    node("summary", "Domain A & B context"),
+    node("p", priorityInfo[key].layers),
+    node("p", priorityInfo[key].context)
+  );
+
+  root.append(context);
+}
+
+/* FRAMEWORK REFERENCES */
+
+function renderFrameworks(key) {
+  const row = frameworkRelevance[key];
+
+  $("frameworkScenarioTitle").textContent =
+    priorityInfo[key].name;
+
+  $("scenarioFrameworkThemes").textContent = row[5];
+
+  const grid = $("scenarioFrameworkGrid");
+  grid.replaceChildren();
+
+  frameworkLinks.forEach(([name, url], index) => {
+    const card = node(
+      "div",
+      undefined,
+      "foundation-item"
+    );
+
+    const paragraph = node("p", row[index + 1] + " ");
+
+    paragraph.append(link("Source reference ↗", url));
+
+    card.append(
+      node("h3", name),
+      paragraph
+    );
+
+    grid.append(card);
+  });
+}
+
+/* DEPARTMENT VIEW */
+
+function renderDepartment() {
+  const department = $("departmentSelect").value;
+  const keys = departments[department];
+  const key = currentKey();
+  const info = priorityInfo[key];
+  const currentState = state[key];
+
+  $("priorityHeading").textContent =
+    "Department priorities";
+
+  $("actionsHeading").textContent =
+    "Actions & requirements";
+
+  const priorities = $("priorityList");
+  priorities.replaceChildren();
+
+  keys.forEach(priorityKey => {
+    const button = node(
+      "button",
+      undefined,
+      "priority-choice"
+    );
+
+    button.type = "button";
+    button.dataset.priority = priorityKey;
+
+    button.setAttribute(
+      "aria-pressed",
+      String(priorityKey === key)
+    );
+
+    button.append(
+      node("span", priorityInfo[priorityKey].name),
+      node("small", state[priorityKey].status)
+    );
+
+    button.addEventListener("click", () => {
+      $("scenarioSelect").value = priorityKey;
+      render();
+    });
+
+    priorities.append(button);
+  });
+
+  const detail = $("priorityDetail");
+
+  detail.replaceChildren(
+    node("h3", "Selected priority"),
+    node("p", info.name)
+  );
+
+  const situation = node(
+    "div",
+    undefined,
+    "priority-situation"
+  );
+
+  situation.append(
+    node("h3", "The situation"),
+    node("p", scenarios[key].scenario)
+  );
+
+  detail.append(situation);
+
+  field(detail, "Owner", info.owner);
+
+  field(
+    detail,
+    "Sample deadline",
+    sampleDate(info.offset) +
+      (info.offset < 0 ? " · overdue" : ""),
+    info.offset < 0 ? "priority-overdue" : ""
+  );
+
+  field(
+    detail,
+    "Review status",
+    currentState.status
+  );
+
+  detail.append(
+    node("h3", "Why it matters"),
+    node("p", scenarios[key].risk)
+  );
+
+  $("departmentArticlesWrap").hidden = false;
+
+  const articles = $("departmentArticles");
+
+  articles.replaceChildren(
+    node(
+      "p",
+      "References across this department’s demo priorities; " +
+      "applicability is reviewed for each use.",
+      "small"
+    )
+  );
+
+  renderArticles(articles, keys, true);
+
+  const requirements = $("requirementsContent");
+
+  requirements.replaceChildren(
+    node("h3", "Relevant EU AI Act articles")
+  );
+
+  renderArticles(requirements, [key]);
+
+  const actionsTaken = [...info.taken];
+
+  if (currentState.phase > 0) {
+    actionsTaken.push(
+      "Sample evidence submitted to Governance."
+    );
+  }
+
+  requirements.append(
+    node("h3", "Department actions taken · demo"),
+    list(actionsTaken)
+  );
+
+  const remainingActions =
+    currentState.phase === 2
+      ? [
+          "Clarify how the submitted evidence demonstrates " +
+          "the requirement.",
+          "Provide the outstanding evidence for Governance review."
+        ]
+      : scenarios[key].responsibility;
+
+  requirements.append(
+    node("h3", "Actions still required"),
+    list(remainingActions),
+    node("h3", "Missing evidence"),
+    list(currentState.missing)
+  );
+
+  renderReferences(requirements, key);
+  renderRisk([key]);
+  renderFrameworks(key);
+  renderEvidence(key);
+}
+
+/* EVIDENCE PANEL */
+
+function renderEvidence(key) {
+  const currentState = state[key];
+  const info = priorityInfo[key];
+
+  $("evidenceCase").textContent =
     "CASE " + key.toUpperCase() + "-001";
 
-  logEvidenceEvent(
-    "ISSUE_OPENED",
-    data.issue
-  );
+  renderLog(currentState.history);
 
-  logEvidenceEvent(
-    "OWNER_ASSIGNED",
-    "action_owner: " + departmentSelect.value + " lead\n" +
-    "review_owner: Governance"
-  );
+  if (currentState.phase === 0) {
+    $("evidenceNext").textContent =
+      "Next action: " + info.owner +
+      " submits the requested evidence.";
+  } else if (currentState.phase === 1) {
+    $("evidenceNext").textContent =
+      "Next action: Governance reviews submitted records; " +
+      info.owner + " supplies the missing evidence.";
+  } else {
+    $("evidenceNext").textContent =
+      "Next action: " + info.owner +
+      " clarifies the submission and supplies the missing evidence.";
+  }
 
-  logEvidenceEvent(
-    "EVIDENCE_REQUESTED",
-    "request: REQ-001\n" +
-    "reference: " + data.article + "\n" +
-    "due: 10 working days after assignment (example)"
-  );
+  const button = $("evidenceAdvance");
 
-  nextAction.textContent =
-    "Next action: " + departmentSelect.value +
-    " submits the requested evidence.";
+  button.disabled = currentState.phase === 2;
 
-  advanceButton.disabled = false;
-  advanceButton.textContent = "Simulate evidence submission →";
+  button.textContent =
+    currentState.phase === 0
+      ? "Simulate evidence submission →"
+      : currentState.phase === 1
+        ? "Simulate Governance review →"
+        : "Review recorded · case remains open";
 
-  evidenceRecord.textContent =
-    "No evidence submitted in this example yet.";
-
-  document.querySelector(".evidence-record").open = false;
+  renderEvidenceRecords(currentState);
 }
 
-function advanceEvidenceExample() {
-  const files = evidenceByScenario[scenarioSelect.value];
+function renderEvidenceRecords(currentState) {
+  const root = $("evidenceRecord");
+  root.replaceChildren();
 
-  evidenceStage++;
-
-  if (evidenceStage === 1) {
-    logEvidenceEvent(
-      "EVIDENCE_RECEIVED",
-      "EVD-001: " + files[0] + "\n" +
-      "EVD-002: " + files[1] + "\n" +
-      "submitted_by: " + departmentSelect.value + " lead\n" +
-      "review: PENDING"
+  if (!currentState.files.length) {
+    root.append(
+      node("p", "No sample evidence submitted yet.")
     );
-
-    logEvidenceEvent(
-      "EVIDENCE_OUTSTANDING",
-      files[2] + "\ncase: OPEN"
-    );
-
-    nextAction.textContent =
-      "Next action: Governance reviews the submitted records; " +
-      "the outstanding item remains with the department.";
-
-    advanceButton.textContent = "Simulate Governance review →";
-
-    evidenceRecord.textContent =
-      "Evidence: EVD-001\n" +
-      "File: " + files[0] + "\n" +
-      "Request: REQ-001\n" +
-      "Submitted by: " + departmentSelect.value + " lead\n" +
-      "Review: Pending\n" +
-      "Sample metadata only.";
 
     return;
   }
 
-  logEvidenceEvent(
-    "REVIEW_RECORDED",
-    "reviewer: Governance\n" +
-    "EVD-001: CLARIFICATION REQUIRED\n" +
-    "EVD-002: REVIEW RECORDED"
-  );
+  currentState.files.forEach((file, index) => {
+    const review =
+      currentState.phase === 1
+        ? "Pending"
+        : "Clarification required";
 
-  logEvidenceEvent(
-    "FOLLOW_UP_REQUIRED",
-    "missing: " + files[2] + "\n" +
-    "owner: " + departmentSelect.value + " lead\n" +
-    "case: OPEN"
-  );
-
-  nextAction.textContent =
-    "Next action: " + departmentSelect.value +
-    " clarifies the submission and provides the outstanding evidence.";
-
-  advanceButton.textContent = "Example complete · work remains open";
-  advanceButton.disabled = true;
-
-  evidenceRecord.textContent +=
-    "\nReview update: Governance requested clarification. " +
-    "Case remains open.";
+    root.append(
+      node(
+        "p",
+        "EVD-" + String(index + 1).padStart(3, "0") +
+        "\nFile: " + file +
+        "\nReview: " + review +
+        "\nIllustrative metadata only."
+      )
+    );
+  });
 }
 
-departmentSelect.addEventListener("change", updateDepartment);
-scenarioSelect.addEventListener("change", updateScenario);
-advanceButton.addEventListener("click", advanceEvidenceExample);
+function renderLog(rows) {
+  const root = $("auditTrail");
+  root.replaceChildren();
 
-updateDepartment();
+  rows.forEach(event => {
+    const li = node("li");
+
+    li.append(
+      node(
+        "time",
+        "[" + event.time + "] EVT-" +
+        String(event.id).padStart(3, "0")
+      ),
+      node("strong", event.type),
+      node("span", event.detail)
+    );
+
+    root.append(li);
+  });
+
+  root.scrollTop = root.scrollHeight;
+}
+
+/* OPEN A PRIORITY FROM GOVERNANCE */
+
+function openPriority(key) {
+  $("departmentSelect").value = departmentFor(key);
+
+  populatePriorities(key);
+  render();
+}
+
+/* GOVERNANCE OVERVIEW */
+
+function renderGovernance() {
+  const keys = Object.keys(priorityInfo);
+
+  const waiting = keys.filter(
+    key => state[key].phase === 1
+  );
+
+  const overdue = keys.filter(
+    key => priorityInfo[key].offset < 0
+  );
+
+  $("priorityHeading").textContent =
+    "Outstanding departments";
+
+  $("actionsHeading").textContent =
+    "Governance priorities";
+
+  $("priorityList").replaceChildren();
+  $("departmentArticlesWrap").hidden = true;
+
+  const root = $("priorityDetail");
+
+  root.replaceChildren(
+    node(
+      "p",
+      "Six illustrative priorities across three departments.",
+      "small"
+    )
+  );
+
+  Object.entries(departments).forEach(
+    ([department, priorityKeys]) => {
+      root.append(node("h3", department));
+
+      priorityKeys.forEach(key => {
+        const info = priorityInfo[key];
+
+        const row = node(
+          "div",
+          undefined,
+          "governance-row"
+        );
+
+        const button = node(
+          "button",
+          info.name,
+          "governance-open"
+        );
+
+        button.type = "button";
+
+        button.addEventListener("click", () => {
+          openPriority(key);
+        });
+
+        row.append(button);
+
+        field(row, "Owner", info.owner);
+
+        field(
+          row,
+          "Missing",
+          state[key].missing.join("; ")
+        );
+
+        field(
+          row,
+          "Sample deadline",
+          sampleDate(info.offset) +
+            (info.offset < 0 ? " · overdue" : ""),
+          info.offset < 0 ? "priority-overdue" : ""
+        );
+
+        field(
+          row,
+          "Review",
+          state[key].status
+        );
+
+        root.append(row);
+      });
+    }
+  );
+
+  const requirements = $("requirementsContent");
+
+  requirements.replaceChildren(
+    node("h3", "Outstanding work")
+  );
+
+  field(
+    requirements,
+    "Open priorities",
+    String(keys.length)
+  );
+
+  field(
+    requirements,
+    "Awaiting Governance review",
+    String(waiting.length)
+  );
+
+  field(
+    requirements,
+    "Overdue sample priorities",
+    String(overdue.length)
+  );
+
+  requirements.append(
+    node("h3", "Review queue")
+  );
+
+  if (!waiting.length) {
+    requirements.append(
+      node(
+        "p",
+        "No submitted evidence is waiting for review. " +
+        "Select a department and simulate a submission."
+      )
+    );
+  }
+
+  waiting.forEach(key => {
+    const paragraph = node("p");
+
+    const button = node(
+      "button",
+      departmentFor(key) + " · " + priorityInfo[key].name,
+      "governance-open"
+    );
+
+    button.type = "button";
+
+    button.addEventListener("click", () => {
+      openPriority(key);
+    });
+
+    paragraph.append(button);
+    requirements.append(paragraph);
+  });
+
+  requirements.append(
+    node("h3", "Follow-up priorities")
+  );
+
+  overdue.forEach(key => {
+    requirements.append(
+      node(
+        "p",
+        departmentFor(key) + " · " +
+        priorityInfo[key].name + " · " +
+        priorityInfo[key].owner,
+        "priority-overdue"
+      )
+    );
+  });
+
+  requirements.append(
+    node("h3", "Governance responsibility"),
+    node(
+      "p",
+      "Review evidence, record decisions and follow up owners. " +
+      "Departments remain responsible for completing their work."
+    ),
+    node("h3", "Article references across departments")
+  );
+
+  renderArticles(requirements, keys, true);
+  renderRisk(keys);
+
+  $("frameworkScenarioTitle").textContent =
+    "Cross-department governance oversight";
+
+  $("scenarioFrameworkThemes").textContent =
+    "Ownership · Evidence · Review · Follow-up";
+
+  $("scenarioFrameworkGrid").replaceChildren(
+    ...frameworkLinks.map(([name, url]) => {
+      const item = node(
+        "div",
+        undefined,
+        "foundation-item"
+      );
+
+      item.append(
+        node("h3", name),
+        link("Source reference ↗", url)
+      );
+
+      return item;
+    })
+  );
+
+  $("evidenceCase").textContent =
+    "GOVERNANCE OVERVIEW";
+
+  renderLog(events);
+
+  $("evidenceNext").textContent =
+    "Next action: Governance follows up overdue evidence " +
+    "and reviews pending submissions.";
+
+  $("evidenceAdvance").disabled = false;
+
+  $("evidenceAdvance").textContent =
+    "Simulate Governance follow-up →";
+
+  $("evidenceRecord").replaceChildren(
+    node(
+      "p",
+      "Select a department priority to inspect its " +
+      "sample evidence records."
+    )
+  );
+}
+
+/* DROPDOWN CONTENT */
+
+function populatePriorities(preferred) {
+  const department = $("departmentSelect").value;
+  const select = $("scenarioSelect");
+
+  select.replaceChildren();
+
+  select.disabled =
+    department === "Governance overview";
+
+  if (select.disabled) {
+    select.append(
+      new Option(
+        "All outstanding departments",
+        "governance"
+      )
+    );
+
+    return;
+  }
+
+  departments[department].forEach(key => {
+    select.append(
+      new Option(priorityInfo[key].name, key)
+    );
+  });
+
+  if (
+    preferred &&
+    departments[department].includes(preferred)
+  ) {
+    select.value = preferred;
+  }
+}
+
+function render() {
+  if (isGovernance()) {
+    renderGovernance();
+  } else {
+    renderDepartment();
+  }
+}
+
+/* SIMULATED EVIDENCE SUBMISSION AND REVIEW */
+
+function advance() {
+  if (isGovernance()) {
+    const overdueKey = Object.keys(priorityInfo).find(
+      key => priorityInfo[key].offset < 0
+    );
+
+    if (!overdueKey) return;
+
+    const info = priorityInfo[overdueKey];
+
+    log(
+      null,
+      "FOLLOW_UP_PREPARED",
+      "owner: " + info.owner +
+      "\npriority: " + info.name +
+      "\nnotification: simulated only"
+    );
+
+    renderGovernance();
+
+    $("evidenceNext").textContent =
+      "Follow-up recorded. " + info.owner +
+      " remains responsible for the outstanding evidence.";
+
+    return;
+  }
+
+  const key = currentKey();
+  const currentState = state[key];
+  const info = priorityInfo[key];
+
+  if (currentState.phase === 0) {
+    currentState.phase = 1;
+    currentState.status = "Awaiting Governance review";
+
+    currentState.files = [...info.files];
+
+    currentState.missing = [
+      info.missing[1]
+    ];
+
+    log(
+      key,
+      "EVIDENCE_RECEIVED",
+      "EVD-001: " + currentState.files[0] +
+      "\nEVD-002: " + currentState.files[1] +
+      "\nsubmitted_by: " + info.owner +
+      "\nreview: PENDING"
+    );
+
+    log(
+      key,
+      "EVIDENCE_OUTSTANDING",
+      currentState.missing.join("\n") +
+      "\ncase: OPEN"
+    );
+  } else if (currentState.phase === 1) {
+    currentState.phase = 2;
+
+    currentState.status =
+      "Clarification requested · case open";
+
+    currentState.missing = [
+      info.missing[1],
+      "Clarification of submitted evidence"
+    ];
+
+    log(
+      key,
+      "REVIEW_RECORDED",
+      "reviewer: Governance" +
+      "\nresult: CLARIFICATION REQUIRED" +
+      "\ncase: OPEN"
+    );
+
+    log(
+      key,
+      "FOLLOW_UP_REQUIRED",
+      "owner: " + info.owner +
+      "\nmissing: " + currentState.missing.join("; ")
+    );
+  }
+
+  renderDepartment();
+}
+
+/* START DEMO */
+
+$("departmentSelect").addEventListener("change", () => {
+  populatePriorities();
+  render();
+});
+
+$("scenarioSelect").addEventListener(
+  "change",
+  render
+);
+
+$("evidenceAdvance").addEventListener(
+  "click",
+  advance
+);
+
+populatePriorities();
+render();
 </script>
 
 </body>
